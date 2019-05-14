@@ -1,33 +1,5 @@
 #include "common.h"
 
-size_t	count_elem_in_list(s_files_select *list)
-{
-	s_files_select	*tmp = list;
-	size_t			count = 0;
-
-	while (tmp) {
-		count++;
-		tmp = tmp->next;
-	}
-
-	return (count);
-}
-
-void	free_list(s_files_select *list)
-{
-	s_files_select	*first = list;
-	s_files_select	*tmp = NULL;
-
-	if (first != NULL) {
-		while (first->next) {
-			tmp = first->next;
-			free(first->file_name);
-			free(first);
-			first = tmp;
-		}
-	}
-}
-
 // add new node and return it
 s_files_select	*add_tails(s_files_select *node)
 {

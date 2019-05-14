@@ -1,0 +1,232 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/45968eff/
+$(BUILD)	Makefile	/^$(BUILD):$/;"	t
+$(NAME)	pc/Makefile	/^$(NAME): $(OBJS)$/;"	t
+$(OFILES_SRC)	Makefile	/^$(OFILES_SRC)	: $(HFILES_BIN)$/;"	t
+$(OUTPUT).elf	Makefile	/^$(OUTPUT).elf	:	$(OFILES)$/;"	t
+$(OUTPUT).nro	Makefile	/^$(OUTPUT).nro	:	$(OUTPUT).elf $(OUTPUT).nacp$/;"	t
+$(OUTPUT).nro	Makefile	/^$(OUTPUT).nro	:	$(OUTPUT).elf$/;"	t
+$(OUTPUT).nso	Makefile	/^$(OUTPUT).nso	:	$(OUTPUT).elf$/;"	t
+$(OUTPUT).nsp	Makefile	/^$(OUTPUT).nsp	:	$(OUTPUT).nso $(OUTPUT).npdm$/;"	t
+%.bin.o	Makefile	/^%.bin.o	%_bin.h :	%.bin$/;"	t
+%.o	pc/Makefile	/^%.o : %.c $(RELINK) .\/Makefile$/;"	t
+%_bin.h	Makefile	/^%.bin.o	%_bin.h :	%.bin$/;"	t
+*	npdm.json	/^        "*" : false,$/;"	b	object:service_access
+*	npdm.json	/^        "*" : true$/;"	b	object:service_access
+APP_ICON	Makefile	/^			export APP_ICON := $(TOPDIR)\/icon.jpg$/;"	m
+APP_ICON	Makefile	/^		export APP_ICON := $(TOPDIR)\/$(TARGET).jpg$/;"	m
+APP_ICON	Makefile	/^	export APP_ICON := $(TOPDIR)\/$(ICON)$/;"	m
+APP_JSON	Makefile	/^			export APP_JSON := $(TOPDIR)\/config.json$/;"	m
+APP_JSON	Makefile	/^		export APP_JSON := $(TOPDIR)\/$(TARGET).json$/;"	m
+APP_JSON	Makefile	/^	export APP_JSON := $(TOPDIR)\/$(CONFIG_JSON)$/;"	m
+ARCH	Makefile	/^ARCH	:=	-march=armv8-a -mtune=cortex-a57 -mtp=soft -fPIE$/;"	m
+ASFLAGS	Makefile	/^ASFLAGS	:=	-g $(ARCH)$/;"	m
+BINFILES	Makefile	/^BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)\/*.*)))$/;"	m
+BLUE	pc/Makefile	/^BLUE = \\033[34m$/;"	m
+BUILD	Makefile	/^BUILD		:=	build$/;"	m
+CC	pc/Makefile	/^CC		= clang$/;"	m
+CFILES	Makefile	/^CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)\/*.c)))$/;"	m
+CFLAGS	Makefile	/^CFLAGS	:=	-g -Wall -Wextra -O2 -ffunction-sections \\$/;"	m
+COMMON_H	include/common.h	/^#define COMMON_H$/;"	d
+COMMON_H	pc/include/common.h	/^#define COMMON_H$/;"	d
+CPPFILES	Makefile	/^CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)\/*.cpp)))$/;"	m
+CXXFLAGS	Makefile	/^CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions$/;"	m
+DATA	Makefile	/^DATA		:=	data$/;"	m
+DEPENDS	Makefile	/^DEPENDS	:=	$(OFILES:.o=.d)$/;"	m
+DEPSDIR	Makefile	/^export DEPSDIR	:=	$(CURDIR)\/$(BUILD)$/;"	m
+FILE_H	include/file.h	/^#define FILE_H$/;"	d
+FILE_H	pc/include/file.h	/^#define FILE_H$/;"	d
+FLAG	pc/Makefile	/^FLAG	= -Wall -Werror -Wextra$/;"	m
+HFILES_BIN	Makefile	/^export HFILES_BIN	:=	$(addsuffix .h,$(subst .,_,$(BINFILES)))$/;"	m
+INCLUDE	Makefile	/^export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)\/$(dir)) \\$/;"	m
+INCLUDE	pc/Makefile	/^INCLUDE	= -I .\/include$/;"	m
+INCLUDES	Makefile	/^INCLUDES	:=	include$/;"	m
+LD	Makefile	/^	export LD	:=	$(CC)$/;"	m
+LD	Makefile	/^	export LD	:=	$(CXX)$/;"	m
+LDFLAGS	Makefile	/^LDFLAGS	=	-specs=$(DEVKITPRO)\/libnx\/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)$/;"	m
+LIBDIRS	Makefile	/^LIBDIRS	:= $(PORTLIBS) $(LIBNX)$/;"	m
+LIBPATHS	Makefile	/^export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)\/lib)$/;"	m
+LIBS	Makefile	/^LIBS	:= -lcurl -lmbedtls -lmbedx509 -lmbedcrypto -lz -lnx$/;"	m
+LINKED_LIST_H	include/linked_list.h	/^#define LINKED_LIST_H$/;"	d
+LINKED_LIST_H	pc/include/linked_list.h	/^#define LINKED_LIST_H$/;"	d
+LINKER	pc/Makefile	/^LINKER = $/;"	m
+NAME	pc/Makefile	/^NAME	= BackupNX$/;"	m
+OBJS	pc/Makefile	/^OBJS	= $(SRCS:.c=.o)$/;"	m
+OFILES	Makefile	/^export OFILES 	:=	$(OFILES_BIN) $(OFILES_SRC)$/;"	m
+OFILES_BIN	Makefile	/^export OFILES_BIN	:=	$(addsuffix .o,$(BINFILES))$/;"	m
+OFILES_SRC	Makefile	/^export OFILES_SRC	:=	$(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)$/;"	m
+OUTPUT	Makefile	/^export OUTPUT	:=	$(CURDIR)\/$(TARGET)$/;"	m
+SFILES	Makefile	/^SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)\/*.s)))$/;"	m
+SOURCES	Makefile	/^SOURCES		:=	source$/;"	m
+SRCS	pc/Makefile	/^SRCS	=	.\/source\/main.c\\$/;"	m
+TARGET	Makefile	/^TARGET		:=	$(notdir $(CURDIR))$/;"	m
+TOPDIR	Makefile	/^TOPDIR ?= $(CURDIR)$/;"	m
+TOPDIR	Makefile	/^export TOPDIR	:=	$(CURDIR)$/;"	m
+VPATH	Makefile	/^export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)\/$(dir)) \\$/;"	m
+WHITE	pc/Makefile	/^WHITE = \\033[37m$/;"	m
+add_tails	pc/source/linked_list.c	/^s_files_select	*add_tails(s_files_select *node)$/;"	f	typeref:typename:s_files_select *
+add_tails	source/linked_list.c	/^s_files_select	*add_tails(s_files_select *node)$/;"	f	typeref:typename:s_files_select *
+address_space_type	npdm.json	/^    "address_space_type"     : 1,$/;"	n
+all	Makefile	/^all	:	$(OUTPUT).nro$/;"	t
+all	Makefile	/^all	:	$(OUTPUT).nsp$/;"	t
+all	Makefile	/^all: $(BUILD)$/;"	t
+all	pc/Makefile	/^all: $(NAME)$/;"	t
+allow_debug	npdm.json	/^            "allow_debug" : true,$/;"	b	object:kernel_capabilities.debug_flags
+application_type	npdm.json	/^        "application_type"   : 1,$/;"	n	object:kernel_capabilities
+chooseFileToUpload	source/file.c	/^void	chooseFileToUpload(s_files_select *files)$/;"	f	typeref:typename:void
+clean	Makefile	/^clean:$/;"	t
+clean	pc/Makefile	/^clean:$/;"	t
+debug_flags	npdm.json	/^        "debug_flags" : {$/;"	o	object:kernel_capabilities
+default_cpu_id	npdm.json	/^    "default_cpu_id"         : 0,$/;"	n
+fclean	pc/Makefile	/^fclean:$/;"	t
+file_name	include/linked_list.h	/^	char					*file_name;	\/\/ name of file$/;"	m	struct:s_files_select	typeref:typename:char *
+file_name	pc/include/linked_list.h	/^	char					*file_name;	\/\/ name of file$/;"	m	struct:s_files_select	typeref:typename:char *
+filesystem_access	npdm.json	/^    "filesystem_access" : {$/;"	o
+force_debug	npdm.json	/^            "force_debug" : true$/;"	b	object:kernel_capabilities.debug_flags
+getFilesList	pc/source/file.c	/^s_files_select	*getFilesList(const char *path)$/;"	f	typeref:typename:s_files_select *
+getFilesList	source/file.c	/^s_files_select	*getFilesList(const char *path)$/;"	f	typeref:typename:s_files_select *
+handle_table_size	npdm.json	/^        "handle_table_size"  : 512,$/;"	n	object:kernel_capabilities
+highest_cpu_id	npdm.json	/^            "highest_cpu_id"          : 2,$/;"	n	object:kernel_capabilities.kernel_flags
+highest_thread_priority	npdm.json	/^            "highest_thread_priority" : 59,$/;"	n	object:kernel_capabilities.kernel_flags
+icons	Makefile	/^	icons := $(wildcard *.jpg)$/;"	m
+is_64_bit	npdm.json	/^    "is_64_bit"              : true,$/;"	b
+is_retail	npdm.json	/^    "is_retail"              : true,$/;"	b
+jsons	Makefile	/^	jsons := $(wildcard *.json)$/;"	m
+kernel_capabilities	npdm.json	/^    "kernel_capabilities" : {$/;"	o
+kernel_flags	npdm.json	/^        "kernel_flags" : {$/;"	o	object:kernel_capabilities
+lowest_cpu_id	npdm.json	/^            "lowest_cpu_id"           : 0$/;"	n	object:kernel_capabilities.kernel_flags
+lowest_thread_priority	npdm.json	/^            "lowest_thread_priority"  : 28,$/;"	n	object:kernel_capabilities.kernel_flags
+main	pc/source/main.c	/^int main(void)$/;"	f	typeref:typename:int
+main	source/main.c	/^int main(void)$/;"	f	typeref:typename:int
+main_thread_priority	npdm.json	/^    "main_thread_priority"   : 44,$/;"	n
+main_thread_stack_size	npdm.json	/^    "main_thread_stack_size" : "0x100000",$/;"	s
+min_kernel_version	npdm.json	/^        "min_kernel_version" : "0x30",$/;"	s	object:kernel_capabilities
+name	npdm.json	/^    "name"                   : "Application",$/;"	s
+next	include/linked_list.h	/^	struct s_files_select	*next;$/;"	m	struct:s_files_select	typeref:struct:s_files_select *
+next	pc/include/linked_list.h	/^	struct s_files_select	*next;$/;"	m	struct:s_files_select	typeref:struct:s_files_select *
+path	include/linked_list.h	/^	char					*path;		\/\/ path of file$/;"	m	struct:s_files_select	typeref:typename:char *
+path	pc/include/linked_list.h	/^	char					*path;		\/\/ path of file$/;"	m	struct:s_files_select	typeref:typename:char *
+permissions	npdm.json	/^        "permissions" : "0xFFFFFFFFFFFFFFFF"$/;"	s	object:filesystem_access
+pool_partition	npdm.json	/^    "pool_partition"         : 0,$/;"	n
+process_category	npdm.json	/^    "process_category"       : 0,$/;"	n
+re	pc/Makefile	/^re: fclean all$/;"	t
+s_files_select	include/linked_list.h	/^typedef struct		s_files_select$/;"	s
+s_files_select	include/linked_list.h	/^}					s_files_select;$/;"	t	typeref:struct:s_files_select
+s_files_select	pc/include/linked_list.h	/^typedef struct		s_files_select$/;"	s
+s_files_select	pc/include/linked_list.h	/^}					s_files_select;$/;"	t	typeref:struct:s_files_select
+select	include/linked_list.h	/^	bool					select;$/;"	m	struct:s_files_select	typeref:typename:bool
+select	pc/include/linked_list.h	/^	bool					select;$/;"	m	struct:s_files_select	typeref:typename:bool
+service_access	npdm.json	/^    "service_access" : {$/;"	o
+svcAcceptSession	npdm.json	/^            "svcAcceptSession"                   : "0x41",$/;"	s	object:kernel_capabilities.syscalls
+svcArbitrateLock	npdm.json	/^            "svcArbitrateLock"                   : "0x1A",$/;"	s	object:kernel_capabilities.syscalls
+svcArbitrateUnlock	npdm.json	/^            "svcArbitrateUnlock"                 : "0x1B",$/;"	s	object:kernel_capabilities.syscalls
+svcBreak	npdm.json	/^            "svcBreak"                           : "0x26",$/;"	s	object:kernel_capabilities.syscalls
+svcBreakDebugProcess	npdm.json	/^            "svcBreakDebugProcess"               : "0x61",$/;"	s	object:kernel_capabilities.syscalls
+svcCancelSynchronization	npdm.json	/^            "svcCancelSynchronization"           : "0x19",$/;"	s	object:kernel_capabilities.syscalls
+svcClearEvent	npdm.json	/^            "svcClearEvent"                      : "0x12",$/;"	s	object:kernel_capabilities.syscalls
+svcCloseHandle	npdm.json	/^            "svcCloseHandle"                     : "0x16",$/;"	s	object:kernel_capabilities.syscalls
+svcConnectToNamedPort	npdm.json	/^            "svcConnectToNamedPort"              : "0x1F",$/;"	s	object:kernel_capabilities.syscalls
+svcConnectToPort	npdm.json	/^            "svcConnectToPort"                   : "0x72",$/;"	s	object:kernel_capabilities.syscalls
+svcContinueDebugEvent	npdm.json	/^            "svcContinueDebugEvent"              : "0x64",$/;"	s	object:kernel_capabilities.syscalls
+svcControlCodeMemory	npdm.json	/^            "svcControlCodeMemory"               : "0x4C",$/;"	s	object:kernel_capabilities.syscalls
+svcCreateCodeMemory	npdm.json	/^            "svcCreateCodeMemory"                : "0x4B",$/;"	s	object:kernel_capabilities.syscalls
+svcCreateEvent	npdm.json	/^            "svcCreateEvent"                     : "0x45",$/;"	s	object:kernel_capabilities.syscalls
+svcCreateSession	npdm.json	/^            "svcCreateSession"                   : "0x40",$/;"	s	object:kernel_capabilities.syscalls
+svcCreateSharedMemory	npdm.json	/^            "svcCreateSharedMemory"              : "0x50",$/;"	s	object:kernel_capabilities.syscalls
+svcCreateThread	npdm.json	/^            "svcCreateThread"                    : "0x08",$/;"	s	object:kernel_capabilities.syscalls
+svcCreateTransferMemory	npdm.json	/^            "svcCreateTransferMemory"            : "0x15",$/;"	s	object:kernel_capabilities.syscalls
+svcDebugActiveProcess	npdm.json	/^            "svcDebugActiveProcess"              : "0x60",$/;"	s	object:kernel_capabilities.syscalls
+svcDumpInfo	npdm.json	/^            "svcDumpInfo"                        : "0x3C",$/;"	s	object:kernel_capabilities.syscalls
+svcDumpInfoNew	npdm.json	/^            "svcDumpInfoNew"                     : "0x3D",$/;"	s	object:kernel_capabilities.syscalls
+svcExitProcess	npdm.json	/^            "svcExitProcess"                     : "0x07",$/;"	s	object:kernel_capabilities.syscalls
+svcExitThread	npdm.json	/^            "svcExitThread"                      : "0x0A",$/;"	s	object:kernel_capabilities.syscalls
+svcFlushDataCache	npdm.json	/^            "svcFlushDataCache"                  : "0x2B",$/;"	s	object:kernel_capabilities.syscalls
+svcFlushEntireDataCache	npdm.json	/^            "svcFlushEntireDataCache"            : "0x2A",$/;"	s	object:kernel_capabilities.syscalls
+svcGetCurrentProcessorNumber	npdm.json	/^            "svcGetCurrentProcessorNumber"       : "0x10",$/;"	s	object:kernel_capabilities.syscalls
+svcGetDebugEvent	npdm.json	/^            "svcGetDebugEvent"                   : "0x63",$/;"	s	object:kernel_capabilities.syscalls
+svcGetDebugThreadContext	npdm.json	/^            "svcGetDebugThreadContext"           : "0x67",$/;"	s	object:kernel_capabilities.syscalls
+svcGetDebugThreadParam	npdm.json	/^            "svcGetDebugThreadParam"             : "0x6D",$/;"	s	object:kernel_capabilities.syscalls
+svcGetFutureThreadInfo	npdm.json	/^            "svcGetFutureThreadInfo"             : "0x2E",$/;"	s	object:kernel_capabilities.syscalls
+svcGetInfo	npdm.json	/^            "svcGetInfo"                         : "0x29",$/;"	s	object:kernel_capabilities.syscalls
+svcGetLastThreadInfo	npdm.json	/^            "svcGetLastThreadInfo"               : "0x2F",$/;"	s	object:kernel_capabilities.syscalls
+svcGetProcessId	npdm.json	/^            "svcGetProcessId"                    : "0x24",$/;"	s	object:kernel_capabilities.syscalls
+svcGetProcessList	npdm.json	/^            "svcGetProcessList"                  : "0x65",$/;"	s	object:kernel_capabilities.syscalls
+svcGetResourceLimitCurrentValue	npdm.json	/^            "svcGetResourceLimitCurrentValue"    : "0x31",$/;"	s	object:kernel_capabilities.syscalls
+svcGetResourceLimitLimitValue	npdm.json	/^            "svcGetResourceLimitLimitValue"      : "0x30",$/;"	s	object:kernel_capabilities.syscalls
+svcGetSystemTick	npdm.json	/^            "svcGetSystemTick"                   : "0x1E",$/;"	s	object:kernel_capabilities.syscalls
+svcGetThreadContext3	npdm.json	/^            "svcGetThreadContext3"               : "0x33",$/;"	s	object:kernel_capabilities.syscalls
+svcGetThreadCoreMask	npdm.json	/^            "svcGetThreadCoreMask"               : "0x0E",$/;"	s	object:kernel_capabilities.syscalls
+svcGetThreadId	npdm.json	/^            "svcGetThreadId"                     : "0x25",$/;"	s	object:kernel_capabilities.syscalls
+svcGetThreadList	npdm.json	/^            "svcGetThreadList"                   : "0x66",$/;"	s	object:kernel_capabilities.syscalls
+svcGetThreadPriority	npdm.json	/^            "svcGetThreadPriority"               : "0x0C",$/;"	s	object:kernel_capabilities.syscalls
+svcMapMemory	npdm.json	/^            "svcMapMemory"                       : "0x04",$/;"	s	object:kernel_capabilities.syscalls
+svcMapPhysicalMemory	npdm.json	/^            "svcMapPhysicalMemory"               : "0x2C",$/;"	s	object:kernel_capabilities.syscalls
+svcMapPhysicalMemoryUnsafe	npdm.json	/^            "svcMapPhysicalMemoryUnsafe"         : "0x48",$/;"	s	object:kernel_capabilities.syscalls
+svcMapProcessCodeMemory	npdm.json	/^            "svcMapProcessCodeMemory"            : "0x77",$/;"	s	object:kernel_capabilities.syscalls
+svcMapProcessMemory	npdm.json	/^            "svcMapProcessMemory"                : "0x74",$/;"	s	object:kernel_capabilities.syscalls
+svcMapSharedMemory	npdm.json	/^            "svcMapSharedMemory"                 : "0x13",$/;"	s	object:kernel_capabilities.syscalls
+svcMapTransferMemory	npdm.json	/^            "svcMapTransferMemory"               : "0x51",$/;"	s	object:kernel_capabilities.syscalls
+svcOutputDebugString	npdm.json	/^            "svcOutputDebugString"               : "0x27",$/;"	s	object:kernel_capabilities.syscalls
+svcQueryDebugProcessMemory	npdm.json	/^            "svcQueryDebugProcessMemory"         : "0x69",$/;"	s	object:kernel_capabilities.syscalls
+svcQueryMemory	npdm.json	/^            "svcQueryMemory"                     : "0x06",$/;"	s	object:kernel_capabilities.syscalls
+svcQueryProcessMemory	npdm.json	/^            "svcQueryProcessMemory"              : "0x76",$/;"	s	object:kernel_capabilities.syscalls
+svcReadDebugProcessMemory	npdm.json	/^            "svcReadDebugProcessMemory"          : "0x6A",$/;"	s	object:kernel_capabilities.syscalls
+svcReadWriteRegister	npdm.json	/^            "svcReadWriteRegister"               : "0x4E",$/;"	s	object:kernel_capabilities.syscalls
+svcReplyAndReceive	npdm.json	/^            "svcReplyAndReceive"                 : "0x43",$/;"	s	object:kernel_capabilities.syscalls
+svcReplyAndReceiveLight	npdm.json	/^            "svcReplyAndReceiveLight"            : "0x42",$/;"	s	object:kernel_capabilities.syscalls
+svcReplyAndReceiveWithUserBuffer	npdm.json	/^            "svcReplyAndReceiveWithUserBuffer"   : "0x44",$/;"	s	object:kernel_capabilities.syscalls
+svcResetSignal	npdm.json	/^            "svcResetSignal"                     : "0x17",$/;"	s	object:kernel_capabilities.syscalls
+svcReturnFromException	npdm.json	/^            "svcReturnFromException"             : "0x28",$/;"	s	object:kernel_capabilities.syscalls
+svcSendAsyncRequestWithUserBuffer	npdm.json	/^            "svcSendAsyncRequestWithUserBuffer"  : "0x23",$/;"	s	object:kernel_capabilities.syscalls
+svcSendSyncRequest	npdm.json	/^            "svcSendSyncRequest"                 : "0x21",$/;"	s	object:kernel_capabilities.syscalls
+svcSendSyncRequestLight	npdm.json	/^            "svcSendSyncRequestLight"            : "0x20",$/;"	s	object:kernel_capabilities.syscalls
+svcSendSyncRequestWithUserBuffer	npdm.json	/^            "svcSendSyncRequestWithUserBuffer"   : "0x22",$/;"	s	object:kernel_capabilities.syscalls
+svcSetDebugThreadContext	npdm.json	/^            "svcSetDebugThreadContext"           : "0x68",$/;"	s	object:kernel_capabilities.syscalls
+svcSetHardwareBreakPoint	npdm.json	/^            "svcSetHardwareBreakPoint"           : "0x6C",$/;"	s	object:kernel_capabilities.syscalls
+svcSetHeapSize	npdm.json	/^            "svcSetHeapSize"                     : "0x01",$/;"	s	object:kernel_capabilities.syscalls
+svcSetMemoryAttribute	npdm.json	/^            "svcSetMemoryAttribute"              : "0x03",$/;"	s	object:kernel_capabilities.syscalls
+svcSetMemoryPermission	npdm.json	/^            "svcSetMemoryPermission"             : "0x02",$/;"	s	object:kernel_capabilities.syscalls
+svcSetProcessActivity	npdm.json	/^            "svcSetProcessActivity"              : "0x4F",$/;"	s	object:kernel_capabilities.syscalls
+svcSetProcessMemoryPermission	npdm.json	/^            "svcSetProcessMemoryPermission"      : "0x73",$/;"	s	object:kernel_capabilities.syscalls
+svcSetThreadActivity	npdm.json	/^            "svcSetThreadActivity"               : "0x32",$/;"	s	object:kernel_capabilities.syscalls
+svcSetThreadCoreMask	npdm.json	/^            "svcSetThreadCoreMask"               : "0x0F",$/;"	s	object:kernel_capabilities.syscalls
+svcSetThreadPriority	npdm.json	/^            "svcSetThreadPriority"               : "0x0D",$/;"	s	object:kernel_capabilities.syscalls
+svcSetUnsafeLimit	npdm.json	/^            "svcSetUnsafeLimit"                  : "0x4A",$/;"	s	object:kernel_capabilities.syscalls
+svcSignalEvent	npdm.json	/^            "svcSignalEvent"                     : "0x11",$/;"	s	object:kernel_capabilities.syscalls
+svcSignalProcessWideKey	npdm.json	/^            "svcSignalProcessWideKey"            : "0x1D",$/;"	s	object:kernel_capabilities.syscalls
+svcSignalToAddress	npdm.json	/^            "svcSignalToAddress"                 : "0x35",$/;"	s	object:kernel_capabilities.syscalls
+svcSleepSystem	npdm.json	/^            "svcSleepSystem"                     : "0x4D",$/;"	s	object:kernel_capabilities.syscalls
+svcSleepThread	npdm.json	/^            "svcSleepThread"                     : "0x0B",$/;"	s	object:kernel_capabilities.syscalls
+svcStartThread	npdm.json	/^            "svcStartThread"                     : "0x09",$/;"	s	object:kernel_capabilities.syscalls
+svcTerminateDebugProcess	npdm.json	/^            "svcTerminateDebugProcess"           : "0x62",$/;"	s	object:kernel_capabilities.syscalls
+svcUnknown00	npdm.json	/^            "svcUnknown00"                       : "0x00",$/;"	s	object:kernel_capabilities.syscalls
+svcUnknown36	npdm.json	/^            "svcUnknown36"                       : "0x36",$/;"	s	object:kernel_capabilities.syscalls
+svcUnknown37	npdm.json	/^            "svcUnknown37"                       : "0x37",$/;"	s	object:kernel_capabilities.syscalls
+svcUnknown38	npdm.json	/^            "svcUnknown38"                       : "0x38",$/;"	s	object:kernel_capabilities.syscalls
+svcUnknown39	npdm.json	/^            "svcUnknown39"                       : "0x39",$/;"	s	object:kernel_capabilities.syscalls
+svcUnknown3a	npdm.json	/^            "svcUnknown3a"                       : "0x3A",$/;"	s	object:kernel_capabilities.syscalls
+svcUnknown3b	npdm.json	/^            "svcUnknown3b"                       : "0x3B",$/;"	s	object:kernel_capabilities.syscalls
+svcUnknown3e	npdm.json	/^            "svcUnknown3e"                       : "0x3E",$/;"	s	object:kernel_capabilities.syscalls
+svcUnknown3f	npdm.json	/^            "svcUnknown3f"                       : "0x3F",$/;"	s	object:kernel_capabilities.syscalls
+svcUnknown46	npdm.json	/^            "svcUnknown46"                       : "0x46",$/;"	s	object:kernel_capabilities.syscalls
+svcUnknown47	npdm.json	/^            "svcUnknown47"                       : "0x47",$/;"	s	object:kernel_capabilities.syscalls
+svcUnmapMemory	npdm.json	/^            "svcUnmapMemory"                     : "0x05",$/;"	s	object:kernel_capabilities.syscalls
+svcUnmapPhysicalMemory	npdm.json	/^            "svcUnmapPhysicalMemory"             : "0x2D",$/;"	s	object:kernel_capabilities.syscalls
+svcUnmapPhysicalMemoryUnsafe	npdm.json	/^            "svcUnmapPhysicalMemoryUnsafe"       : "0x49",$/;"	s	object:kernel_capabilities.syscalls
+svcUnmapProcessCodeMemory	npdm.json	/^            "svcUnmapProcessCodeMemory"          : "0x78"$/;"	s	object:kernel_capabilities.syscalls
+svcUnmapProcessMemory	npdm.json	/^            "svcUnmapProcessMemory"              : "0x75",$/;"	s	object:kernel_capabilities.syscalls
+svcUnmapSharedMemory	npdm.json	/^            "svcUnmapSharedMemory"               : "0x14",$/;"	s	object:kernel_capabilities.syscalls
+svcUnmapTransferMemory	npdm.json	/^            "svcUnmapTransferMemory"             : "0x52",$/;"	s	object:kernel_capabilities.syscalls
+svcWaitForAddress	npdm.json	/^            "svcWaitForAddress"                  : "0x34",$/;"	s	object:kernel_capabilities.syscalls
+svcWaitProcessWideKeyAtomic	npdm.json	/^            "svcWaitProcessWideKeyAtomic"        : "0x1C",$/;"	s	object:kernel_capabilities.syscalls
+svcWaitSynchronization	npdm.json	/^            "svcWaitSynchronization"             : "0x18",$/;"	s	object:kernel_capabilities.syscalls
+svcWriteDebugProcessMemory	npdm.json	/^            "svcWriteDebugProcessMemory"         : "0x6B",$/;"	s	object:kernel_capabilities.syscalls
+syscalls	npdm.json	/^        "syscalls" : {$/;"	o	object:kernel_capabilities
+title_id	npdm.json	/^    "title_id"               : "0x0101000000000000",$/;"	s
+title_id_range_max	npdm.json	/^    "title_id_range_max"     : "0x01ffffffffffffff",$/;"	s
+title_id_range_min	npdm.json	/^    "title_id_range_min"     : "0x0100000000000000",$/;"	s

@@ -5,6 +5,5 @@
 #include "linked_list.h"
 
 s_files_select	*getFilesList(const char *path);
-void	chooseFileToUpload(s_files_select *);
 
 #endif
