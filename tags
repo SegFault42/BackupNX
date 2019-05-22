@@ -41,7 +41,7 @@ DEPENDS	Makefile	/^DEPENDS	:=	$(OFILES:.o=.d)$/;"	m
 DEPSDIR	Makefile	/^export DEPSDIR	:=	$(CURDIR)\/$(BUILD)$/;"	m
 FILE_H	include/file.h	/^#define FILE_H$/;"	d
 FILE_H	pc/include/file.h	/^#define FILE_H$/;"	d
-FLAG	pc/Makefile	/^FLAG	= -Wall -Werror -Wextra$/;"	m
+FLAG	pc/Makefile	/^FLAG	= -g -Wall -Werror -Wextra$/;"	m
 HFILES_BIN	Makefile	/^export HFILES_BIN	:=	$(addsuffix .h,$(subst .,_,$(BINFILES)))$/;"	m
 INCLUDE	Makefile	/^export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)\/$(dir)) \\$/;"	m
 INCLUDE	pc/Makefile	/^INCLUDE	= -I .\/include$/;"	m
@@ -81,6 +81,7 @@ application_type	npdm.json	/^        "application_type"   : 1,$/;"	n	object:kern
 chooseFileToUpload	source/file.c	/^void	chooseFileToUpload(s_files_select *files)$/;"	f	typeref:typename:void
 clean	Makefile	/^clean:$/;"	t
 clean	pc/Makefile	/^clean:$/;"	t
+count_elem_in_list	source/linked_list.c	/^size_t	count_elem_in_list(s_files_select *list)$/;"	f	typeref:typename:size_t
 debug_flags	npdm.json	/^        "debug_flags" : {$/;"	o	object:kernel_capabilities
 default_cpu_id	npdm.json	/^    "default_cpu_id"         : 0,$/;"	n
 fclean	pc/Makefile	/^fclean:$/;"	t
@@ -88,6 +89,7 @@ file_name	include/linked_list.h	/^	char					*file_name;	\/\/ name of file$/;"	m	
 file_name	pc/include/linked_list.h	/^	char					*file_name;	\/\/ name of file$/;"	m	struct:s_files_select	typeref:typename:char *
 filesystem_access	npdm.json	/^    "filesystem_access" : {$/;"	o
 force_debug	npdm.json	/^            "force_debug" : true$/;"	b	object:kernel_capabilities.debug_flags
+free_list	source/linked_list.c	/^void	free_list(s_files_select *list)$/;"	f	typeref:typename:void
 getFilesList	pc/source/file.c	/^s_files_select	*getFilesList(const char *path)$/;"	f	typeref:typename:s_files_select *
 getFilesList	source/file.c	/^s_files_select	*getFilesList(const char *path)$/;"	f	typeref:typename:s_files_select *
 handle_table_size	npdm.json	/^        "handle_table_size"  : 512,$/;"	n	object:kernel_capabilities
@@ -109,7 +111,7 @@ min_kernel_version	npdm.json	/^        "min_kernel_version" : "0x30",$/;"	s	obje
 name	npdm.json	/^    "name"                   : "Application",$/;"	s
 next	include/linked_list.h	/^	struct s_files_select	*next;$/;"	m	struct:s_files_select	typeref:struct:s_files_select *
 next	pc/include/linked_list.h	/^	struct s_files_select	*next;$/;"	m	struct:s_files_select	typeref:struct:s_files_select *
-path	include/linked_list.h	/^	char					*path;		\/\/ path of file$/;"	m	struct:s_files_select	typeref:typename:char *
+path	include/linked_list.h	/^	char					path[PATH_MAX];		\/\/ path of file$/;"	m	struct:s_files_select	typeref:typename:char[]
 path	pc/include/linked_list.h	/^	char					*path;		\/\/ path of file$/;"	m	struct:s_files_select	typeref:typename:char *
 permissions	npdm.json	/^        "permissions" : "0xFFFFFFFFFFFFFFFF"$/;"	s	object:filesystem_access
 pool_partition	npdm.json	/^    "pool_partition"         : 0,$/;"	n

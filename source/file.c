@@ -42,10 +42,10 @@
 		/*consoleUpdate(NULL);*/
 	/*}*/
 
-s_files_select	*getFilesList(const char *path)
+t_files_select	*getFilesList(const char *path)
 {
-	s_files_select	*new_node = NULL;
-	s_files_select	*begin = NULL;
+	t_files_select	*new_node = NULL;
+	t_files_select	*begin = NULL;
 	DIR				*dirp = NULL;
 	struct dirent	*dirent = NULL;
 
@@ -74,7 +74,7 @@ s_files_select	*getFilesList(const char *path)
 	return (begin);
 }
 
-void	chooseFileToUpload(s_files_select *files)
+void	chooseFileToUpload(t_files_select *files)
 {
-	
+	(void)files;
 }

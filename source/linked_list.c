@@ -1,8 +1,8 @@
 #include "common.h"
 
-size_t	count_elem_in_list(s_files_select *list)
+size_t	count_elem_in_list(t_files_select *list)
 {
-	s_files_select	*tmp = list;
+	t_files_select	*tmp = list;
 	size_t			count = 0;
 
 	while (tmp) {
@@ -13,10 +13,10 @@ size_t	count_elem_in_list(s_files_select *list)
 	return (count);
 }
 
-void	free_list(s_files_select *list)
+void	free_list(t_files_select *list)
 {
-	s_files_select	*first = list;
-	s_files_select	*tmp = NULL;
+	t_files_select	*first = list;
+	t_files_select	*tmp = NULL;
 
 	if (first != NULL) {
 		while (first->next) {
@@ -29,13 +29,13 @@ void	free_list(s_files_select *list)
 }
 
 // add new node and return it
-s_files_select	*add_tails(s_files_select *node)
+t_files_select	*add_tails(t_files_select *node)
 {
-	s_files_select	*first = node; // keep first elem
-	s_files_select	*new_node = NULL;
+	t_files_select	*first = node; // keep first elem
+	t_files_select	*new_node = NULL;
 
 	// alloc new node
-	new_node = calloc(sizeof(s_files_select), 1);
+	new_node = calloc(sizeof(t_files_select), 1);
 	if (new_node == NULL)
 		{ return (NULL); }
 
@@ -53,15 +53,15 @@ s_files_select	*add_tails(s_files_select *node)
 	return (new_node);
 }
 
-/*s_files_select	*add_tails(void *fil, const char *name)*/
+/*t_files_select	*add_tails(void *fil, const char *name)*/
 /*{*/
 	/*// keep ptr on first node*/
-	/*s_files_select	*ptr = (s_files_select *)files;*/
-	/*s_files_select	*files = (s_files_select *)fil;*/
+	/*t_files_select	*ptr = (t_files_select *)files;*/
+	/*t_files_select	*files = (t_files_select *)fil;*/
 
 	/*// create first node*/
 	/*if (files == NULL) {*/
-		/*files = calloc(sizeof(s_files_select), 1);*/
+		/*files = calloc(sizeof(t_files_select), 1);*/
 		/*if (files == NULL) {*/
 			/*return (NULL);*/
 		/*}*/
@@ -73,7 +73,7 @@ s_files_select	*add_tails(s_files_select *node)
 		/*}*/
 
 		/*// Create new node*/
-		/*files->next = calloc(sizeof(s_files_select), 1);*/
+		/*files->next = calloc(sizeof(t_files_select), 1);*/
 		/*if (files->next == NULL) {*/
 			/*return (NULL);*/
 		/*}*/
