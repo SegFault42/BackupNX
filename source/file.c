@@ -42,6 +42,17 @@
 		/*consoleUpdate(NULL);*/
 	/*}*/
 
+bool	isFileExist(const char *file)
+{
+	struct stat	st = {0};
+
+	if (stat(file, &st) == -1) {
+		return (false);
+	}
+
+	return (true);
+}
+
 t_files_select	*getFilesList(const char *path)
 {
 	t_files_select	*new_node = NULL;

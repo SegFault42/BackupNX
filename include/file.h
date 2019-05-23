@@ -14,7 +14,8 @@ typedef struct		s_files
 	char			old_path[PATH_MAX];	// old path name
 }					t_files;
 
+bool			isFileExist(const char *file);
 t_files_select	*getFilesList(const char *path);
-void	chooseFileToUpload(t_files_select *);
+void			chooseFileToUpload(t_files_select *);
 
 #endif

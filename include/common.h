@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <curl/curl.h>
 #include <sys/socket.h>
+#include <sys/stat.h>
 
 #include <switch.h>
 
