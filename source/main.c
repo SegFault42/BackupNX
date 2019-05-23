@@ -109,20 +109,27 @@ int main(void)
 			char	old_path[PATH_MAX] = {0};
 			char	*tmp = NULL;
 
-			strcpy(old_path, s_files->path);
-			tmp = strrchr(old_path, '/');
-			if (tmp) {
-				*tmp = '\0';
-				memset(s_files->begin->path, 0, PATH_MAX);
-				memset(s_files->begin->file_name, 0, PATH_MAX);
-				strcat(s_files->begin->path, old_path);
-				change_directory(s_files);
+			if (strchr(&s_files->path[1], '/')) {
+				strcpy(old_path, s_files->path);
+				tmp = strrchr(old_path, '/');
+				if (tmp) {
+					*tmp = '\0';
+				}
+			} else {
+				old_path[0] = '/';
 			}
-			printf("tmp = %s\n", tmp);
+			memset(s_files->path, 0, PATH_MAX);
+			strcpy(s_files->path, old_path);
+			if (chdir(s_files->path) != -1) {
+				free_list(s_files->files);
+				s_files->files = getFilesList(s_files->path);
+				s_files->begin = s_files->files;
+				s_files->nb_elem = count_elem_in_list(s_files->begin);
+				s_files->cursor = 0;
+			}
 			printf("old_path = %s\n", old_path);
 			printf("path = %s\n", s_files->path);
 			consoleUpdate(NULL);
-			sleep(2);
 		}
 
 		if (kDown & KEY_PLUS) {
