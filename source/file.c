@@ -29,11 +29,14 @@ t_files_select	*getFilesList(const char *path)
 		new_node = create_node();
 		if (new_node) {
 			new_node->file_name = strdup(dirent->d_name);
+
+			strcat(new_node->path, path);
+			if (new_node->path[strlen(new_node->path) -1] != '/')
+				strcat(new_node->path, "/");
+			strcat(new_node->path, new_node->file_name);
+
 			begin = insert_node(begin, new_node);
 		}
-			printf("file = %s\n", new_node->file_name);
-			consoleUpdate(NULL);
-			sleep(1);
 	}
 
 	closedir(dirp);

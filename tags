@@ -6,7 +6,6 @@
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
 !_TAG_PROGRAM_VERSION	0.0.0	/45968eff/
 $(BUILD)	Makefile	/^$(BUILD):$/;"	t
-$(NAME)	pc/Makefile	/^$(NAME): $(OBJS)$/;"	t
 $(OFILES_SRC)	Makefile	/^$(OFILES_SRC)	: $(HFILES_BIN)$/;"	t
 $(OUTPUT).elf	Makefile	/^$(OUTPUT).elf	:	$(OFILES)$/;"	t
 $(OUTPUT).nro	Makefile	/^$(OUTPUT).nro	:	$(OUTPUT).elf $(OUTPUT).nacp$/;"	t
@@ -14,7 +13,6 @@ $(OUTPUT).nro	Makefile	/^$(OUTPUT).nro	:	$(OUTPUT).elf$/;"	t
 $(OUTPUT).nso	Makefile	/^$(OUTPUT).nso	:	$(OUTPUT).elf$/;"	t
 $(OUTPUT).nsp	Makefile	/^$(OUTPUT).nsp	:	$(OUTPUT).nso $(OUTPUT).npdm$/;"	t
 %.bin.o	Makefile	/^%.bin.o	%_bin.h :	%.bin$/;"	t
-%.o	pc/Makefile	/^%.o : %.c $(RELINK) .\/Makefile$/;"	t
 %_bin.h	Makefile	/^%.bin.o	%_bin.h :	%.bin$/;"	t
 *	npdm.json	/^        "*" : false,$/;"	b	object:service_access
 *	npdm.json	/^        "*" : true$/;"	b	object:service_access
@@ -27,24 +25,19 @@ APP_JSON	Makefile	/^	export APP_JSON := $(TOPDIR)\/$(CONFIG_JSON)$/;"	m
 ARCH	Makefile	/^ARCH	:=	-march=armv8-a -mtune=cortex-a57 -mtp=soft -fPIE$/;"	m
 ASFLAGS	Makefile	/^ASFLAGS	:=	-g $(ARCH)$/;"	m
 BINFILES	Makefile	/^BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)\/*.*)))$/;"	m
-BLUE	pc/Makefile	/^BLUE = \\033[34m$/;"	m
 BUILD	Makefile	/^BUILD		:=	build$/;"	m
-CC	pc/Makefile	/^CC		= clang$/;"	m
 CFILES	Makefile	/^CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)\/*.c)))$/;"	m
 CFLAGS	Makefile	/^CFLAGS	:=	-g -Wall -Wextra -O2 -ffunction-sections \\$/;"	m
 COMMON_H	include/common.h	/^#define COMMON_H$/;"	d
-COMMON_H	pc/include/common.h	/^#define COMMON_H$/;"	d
 CPPFILES	Makefile	/^CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)\/*.cpp)))$/;"	m
 CXXFLAGS	Makefile	/^CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions$/;"	m
 DATA	Makefile	/^DATA		:=	data$/;"	m
 DEPENDS	Makefile	/^DEPENDS	:=	$(OFILES:.o=.d)$/;"	m
 DEPSDIR	Makefile	/^export DEPSDIR	:=	$(CURDIR)\/$(BUILD)$/;"	m
+DIRECTORY	include/linked_list.h	/^#define DIRECTORY	/;"	d
 FILE_H	include/file.h	/^#define FILE_H$/;"	d
-FILE_H	pc/include/file.h	/^#define FILE_H$/;"	d
-FLAG	pc/Makefile	/^FLAG	= -g -Wall -Werror -Wextra$/;"	m
 HFILES_BIN	Makefile	/^export HFILES_BIN	:=	$(addsuffix .h,$(subst .,_,$(BINFILES)))$/;"	m
 INCLUDE	Makefile	/^export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)\/$(dir)) \\$/;"	m
-INCLUDE	pc/Makefile	/^INCLUDE	= -I .\/include$/;"	m
 INCLUDES	Makefile	/^INCLUDES	:=	include$/;"	m
 LD	Makefile	/^	export LD	:=	$(CC)$/;"	m
 LD	Makefile	/^	export LD	:=	$(CXX)$/;"	m
@@ -53,54 +46,46 @@ LIBDIRS	Makefile	/^LIBDIRS	:= $(PORTLIBS) $(LIBNX)$/;"	m
 LIBPATHS	Makefile	/^export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)\/lib)$/;"	m
 LIBS	Makefile	/^LIBS	:= -lcurl -lmbedtls -lmbedx509 -lmbedcrypto -lz -lnx$/;"	m
 LINKED_LIST_H	include/linked_list.h	/^#define LINKED_LIST_H$/;"	d
-LINKED_LIST_H	pc/include/linked_list.h	/^#define LINKED_LIST_H$/;"	d
-LINKER	pc/Makefile	/^LINKER = $/;"	m
-NAME	pc/Makefile	/^NAME	= BackupNX$/;"	m
-OBJS	pc/Makefile	/^OBJS	= $(SRCS:.c=.o)$/;"	m
 OFILES	Makefile	/^export OFILES 	:=	$(OFILES_BIN) $(OFILES_SRC)$/;"	m
 OFILES_BIN	Makefile	/^export OFILES_BIN	:=	$(addsuffix .o,$(BINFILES))$/;"	m
 OFILES_SRC	Makefile	/^export OFILES_SRC	:=	$(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)$/;"	m
 OUTPUT	Makefile	/^export OUTPUT	:=	$(CURDIR)\/$(TARGET)$/;"	m
+REGULAR_FILE	include/linked_list.h	/^#define REGULAR_FILE	/;"	d
+SELECT_DIR	include/common.h	/^#define SELECT_DIR	/;"	d
 SFILES	Makefile	/^SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)\/*.s)))$/;"	m
 SOURCES	Makefile	/^SOURCES		:=	source$/;"	m
-SRCS	pc/Makefile	/^SRCS	=	.\/source\/main.c\\$/;"	m
 TARGET	Makefile	/^TARGET		:=	$(notdir $(CURDIR))$/;"	m
 TOPDIR	Makefile	/^TOPDIR ?= $(CURDIR)$/;"	m
 TOPDIR	Makefile	/^export TOPDIR	:=	$(CURDIR)$/;"	m
 VPATH	Makefile	/^export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)\/$(dir)) \\$/;"	m
-WHITE	pc/Makefile	/^WHITE = \\033[37m$/;"	m
-add_tails	pc/source/linked_list.c	/^s_files_select	*add_tails(s_files_select *node)$/;"	f	typeref:typename:s_files_select *
-add_tails	source/linked_list.c	/^t_files_select	*add_tails(t_files_select *node)$/;"	f	typeref:typename:t_files_select *
+add_tails	source/linked_list.c	/^static void	add_tails(t_files_select *begin, t_files_select *node)$/;"	f	typeref:typename:void	file:
 address_space_type	npdm.json	/^    "address_space_type"     : 1,$/;"	n
 all	Makefile	/^all	:	$(OUTPUT).nro$/;"	t
 all	Makefile	/^all	:	$(OUTPUT).nsp$/;"	t
 all	Makefile	/^all: $(BUILD)$/;"	t
-all	pc/Makefile	/^all: $(NAME)$/;"	t
 allow_debug	npdm.json	/^            "allow_debug" : true,$/;"	b	object:kernel_capabilities.debug_flags
 application_type	npdm.json	/^        "application_type"   : 1,$/;"	n	object:kernel_capabilities
 back_directory	source/main.c	/^void	back_directory(t_files *s_files)$/;"	f	typeref:typename:void
 begin	include/file.h	/^	t_files_select	*begin;				\/\/ pointer to move in linked list$/;"	m	struct:s_files	typeref:typename:t_files_select *
-change_directory	source/main.c	/^void	change_directory(t_files *s_files, char *dir)$/;"	f	typeref:typename:void
+change_directory	source/main.c	/^void	change_directory(t_files *s_files, bool mode)$/;"	f	typeref:typename:void
 chooseFileToUpload	source/file.c	/^void	chooseFileToUpload(t_files_select *files)$/;"	f	typeref:typename:void
 clean	Makefile	/^clean:$/;"	t
-clean	pc/Makefile	/^clean:$/;"	t
 count_elem_in_list	source/linked_list.c	/^size_t	count_elem_in_list(t_files_select *list)$/;"	f	typeref:typename:size_t
+create_node	source/linked_list.c	/^t_files_select	*create_node(void)$/;"	f	typeref:typename:t_files_select *
 cursor	include/file.h	/^	size_t			cursor;				\/\/ cursor to select file$/;"	m	struct:s_files	typeref:typename:size_t
 debug_flags	npdm.json	/^        "debug_flags" : {$/;"	o	object:kernel_capabilities
 default_cpu_id	npdm.json	/^    "default_cpu_id"         : 0,$/;"	n
-fclean	pc/Makefile	/^fclean:$/;"	t
 file_name	include/linked_list.h	/^	char					*file_name;	\/\/ name of file$/;"	m	struct:t_files_select	typeref:typename:char *
-file_name	pc/include/linked_list.h	/^	char					*file_name;	\/\/ name of file$/;"	m	struct:s_files_select	typeref:typename:char *
 files	include/file.h	/^	t_files_select	*files;				\/\/ head pointer$/;"	m	struct:s_files	typeref:typename:t_files_select *
 filesystem_access	npdm.json	/^    "filesystem_access" : {$/;"	o
 force_debug	npdm.json	/^            "force_debug" : true$/;"	b	object:kernel_capabilities.debug_flags
 free_list	source/linked_list.c	/^void	free_list(t_files_select *list)$/;"	f	typeref:typename:void
-getFilesList	pc/source/file.c	/^s_files_select	*getFilesList(const char *path)$/;"	f	typeref:typename:s_files_select *
 getFilesList	source/file.c	/^t_files_select	*getFilesList(const char *path)$/;"	f	typeref:typename:t_files_select *
 handle_table_size	npdm.json	/^        "handle_table_size"  : 512,$/;"	n	object:kernel_capabilities
 highest_cpu_id	npdm.json	/^            "highest_cpu_id"          : 2,$/;"	n	object:kernel_capabilities.kernel_flags
 highest_thread_priority	npdm.json	/^            "highest_thread_priority" : 59,$/;"	n	object:kernel_capabilities.kernel_flags
 icons	Makefile	/^	icons := $(wildcard *.jpg)$/;"	m
+insert_node	source/linked_list.c	/^t_files_select	*insert_node(t_files_select *begin, t_files_select *node)$/;"	f	typeref:typename:t_files_select *
 isFileExist	source/file.c	/^bool	isFileExist(const char *file)$/;"	f	typeref:typename:bool
 is_64_bit	npdm.json	/^    "is_64_bit"              : true,$/;"	b
 is_retail	npdm.json	/^    "is_retail"              : true,$/;"	b
@@ -109,7 +94,6 @@ kernel_capabilities	npdm.json	/^    "kernel_capabilities" : {$/;"	o
 kernel_flags	npdm.json	/^        "kernel_flags" : {$/;"	o	object:kernel_capabilities
 lowest_cpu_id	npdm.json	/^            "lowest_cpu_id"           : 0$/;"	n	object:kernel_capabilities.kernel_flags
 lowest_thread_priority	npdm.json	/^            "lowest_thread_priority"  : 28,$/;"	n	object:kernel_capabilities.kernel_flags
-main	pc/source/main.c	/^int main(void)$/;"	f	typeref:typename:int
 main	source/main.c	/^int main(void)$/;"	f	typeref:typename:int
 main_thread_priority	npdm.json	/^    "main_thread_priority"   : 44,$/;"	n
 main_thread_stack_size	npdm.json	/^    "main_thread_stack_size" : "0x100000",$/;"	s
@@ -119,21 +103,15 @@ move_up	source/main.c	/^void	move_up(t_files *s_files)$/;"	f	typeref:typename:vo
 name	npdm.json	/^    "name"                   : "Application",$/;"	s
 nb_elem	include/file.h	/^	size_t			nb_elem;			\/\/ nb of files in cur dir$/;"	m	struct:s_files	typeref:typename:size_t
 next	include/linked_list.h	/^	struct t_files_select	*next;$/;"	m	struct:t_files_select	typeref:struct:t_files_select *
-next	pc/include/linked_list.h	/^	struct s_files_select	*next;$/;"	m	struct:s_files_select	typeref:struct:s_files_select *
 old_path	include/file.h	/^	char			old_path[PATH_MAX];	\/\/ old path name$/;"	m	struct:s_files	typeref:typename:char[]
 path	include/file.h	/^	char			path[PATH_MAX];		\/\/ current path name$/;"	m	struct:s_files	typeref:typename:char[]
 path	include/linked_list.h	/^	char					path[PATH_MAX];		\/\/ path of file$/;"	m	struct:t_files_select	typeref:typename:char[]
-path	pc/include/linked_list.h	/^	char					*path;		\/\/ path of file$/;"	m	struct:s_files_select	typeref:typename:char *
 permissions	npdm.json	/^        "permissions" : "0xFFFFFFFFFFFFFFFF"$/;"	s	object:filesystem_access
 pool_partition	npdm.json	/^    "pool_partition"         : 0,$/;"	n
 print_directory	source/main.c	/^void	print_directory(t_files_select *begin, size_t cursor)$/;"	f	typeref:typename:void
 process_category	npdm.json	/^    "process_category"       : 0,$/;"	n
-re	pc/Makefile	/^re: fclean all$/;"	t
 s_files	include/file.h	/^typedef struct		s_files$/;"	s
-s_files_select	pc/include/linked_list.h	/^typedef struct		s_files_select$/;"	s
-s_files_select	pc/include/linked_list.h	/^}					s_files_select;$/;"	t	typeref:struct:s_files_select
 select	include/linked_list.h	/^	bool					select;$/;"	m	struct:t_files_select	typeref:typename:bool
-select	pc/include/linked_list.h	/^	bool					select;$/;"	m	struct:s_files_select	typeref:typename:bool
 select_file	source/main.c	/^void	select_file(t_files *s_files)$/;"	f	typeref:typename:void
 service_access	npdm.json	/^    "service_access" : {$/;"	o
 svcAcceptSession	npdm.json	/^            "svcAcceptSession"                   : "0x41",$/;"	s	object:kernel_capabilities.syscalls
@@ -247,3 +225,4 @@ t_files_select	include/linked_list.h	/^}					t_files_select;$/;"	t	typeref:struc
 title_id	npdm.json	/^    "title_id"               : "0x0101000000000000",$/;"	s
 title_id_range_max	npdm.json	/^    "title_id_range_max"     : "0x01ffffffffffffff",$/;"	s
 title_id_range_min	npdm.json	/^    "title_id_range_min"     : "0x0100000000000000",$/;"	s
+type	include/linked_list.h	/^	uint8_t					type;$/;"	m	struct:t_files_select	typeref:typename:uint8_t

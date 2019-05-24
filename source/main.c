@@ -3,6 +3,7 @@
 void	print_directory(t_files_select *begin, size_t cursor)
 {
 	size_t	elem = 0;
+	struct stat		st;
 
 	if (begin == NULL) {
 		printf("No such file or directory\n");
@@ -20,10 +21,17 @@ void	print_directory(t_files_select *begin, size_t cursor)
 			} else {
 				printf("[ ] ");
 			}
-	
+
+			stat(begin->path, &st);
+
 			// Print filename
-			printf("%s\n", begin->file_name);
-	
+			if (S_ISDIR(st.st_mode)) {
+				printf("%s%s%s\n", CONSOLE_YELLOW, begin->file_name, CONSOLE_RESET);
+			} else if (S_ISREG(st.st_mode)) {
+				printf("%s%s%s\n", CONSOLE_CYAN, begin->file_name, CONSOLE_RESET);
+			} else {
+				printf("%s\n", begin->file_name);
+			}
 			begin = begin->next;
 		}
 	}
@@ -43,6 +51,8 @@ void	change_directory(t_files *s_files, bool mode)
 		for (size_t i = 0; i < s_files->cursor; i++) {
 			s_files->begin = s_files->begin->next;
 		}
+		if (s_files->path[strlen(s_files->path) -1] != '/')
+			strcat(s_files->path, "/");
 		strcat(s_files->path, s_files->begin->file_name);
 		strcat(s_files->path, "/");
 	}
@@ -139,6 +149,9 @@ int main(void)
 		consoleClear();
 		hidScanInput();
 		u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
+
+		if (s_files && s_files->begin)
+		printf("%s | %s\n", s_files->begin->path, s_files->path);
 
 		// Print all files in curent dir
 		print_directory(s_files->begin, s_files->cursor);

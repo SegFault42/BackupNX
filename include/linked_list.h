@@ -1,11 +1,16 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
+#define DIRECTORY		1
+#define REGULAR_FILE	2
+
 typedef struct		t_files_select
 {
 	char					*file_name;	// name of file
 	char					path[PATH_MAX];		// path of file
 	bool					select;
+	uint8_t					type;
+
 	struct t_files_select	*next;
 }					t_files_select;
 
