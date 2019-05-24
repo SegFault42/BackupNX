@@ -4,52 +4,48 @@ void	print_directory(t_files_select *begin, size_t cursor)
 {
 	size_t	elem = 0;
 
-	for (; begin; elem++) {
-		// Print cursor
-		if (elem == cursor) {
- 			printf("> ");
-		} else {
-			printf("  "); }
-
-		// Print selected
-		if (begin->select == true) {
-			printf("[X] ");
-		} else {
-			printf("[ ] ");
-		}
-
-		// Print filename
-		printf("%s\n", begin->file_name);
-
-		begin = begin->next;
-	}
-
-	if (elem == 0) {
+	if (begin == NULL) {
 		printf("No such file or directory\n");
+	} else {
+		for (; begin; elem++) {
+			// Print cursor
+			if (elem == cursor) {
+	 			printf("> ");
+			} else {
+				printf("  "); }
+	
+			// Print selected
+			if (begin->select == true) {
+				printf("[X] ");
+			} else {
+				printf("[ ] ");
+			}
+	
+			// Print filename
+			printf("%s\n", begin->file_name);
+	
+			begin = begin->next;
+		}
 	}
 }
 
-void	change_directory(t_files *s_files, char *dir)
+void	change_directory(t_files *s_files, bool mode)
 {
-	char	save_dir[PATH_MAX] = {0};
 	t_files_select	*s_files_save = s_files->begin;
+	char			save_dir[PATH_MAX] = {0};
+	struct stat		st;
 
 	strcpy(save_dir, s_files->path);
 
 	// enter to selected dir and free linked list
-	memset(s_files->path, 0, PATH_MAX);
 
-	if (dir == NULL) {
+	if (mode == SELECT_DIR) {
 		for (size_t i = 0; i < s_files->cursor; i++) {
 			s_files->begin = s_files->begin->next;
 		}
-		strcat(s_files->path, s_files->begin->path);
 		strcat(s_files->path, s_files->begin->file_name);
-	} else {
-		strcat(s_files->path, dir);
+		strcat(s_files->path, "/");
 	}
-
-	struct stat	st;
 
 	stat(s_files->path, &st);
 
@@ -82,6 +78,8 @@ void	move_up(t_files *s_files)
 
 void	select_file(t_files *s_files)
 {
+	t_files_select	*s_tmp = s_files->begin;
+
 	if (s_files->begin) {
 		for (size_t i = 0; i < s_files->cursor; i++) {
 			s_files->begin = s_files->begin->next;
@@ -89,26 +87,33 @@ void	select_file(t_files *s_files)
 		// flip bool
 		s_files->begin->select = !s_files->begin->select;
 	}
+
+	s_files->begin = s_tmp;
 }
 
 // go back in tree
 void	back_directory(t_files *s_files)
 {
-	char	old_path[PATH_MAX] = {0};
 	char	*tmp = NULL;
+	size_t	len = 0;
+
+	len = strlen(s_files->path);
+
+	// remove last /
+	if (s_files->path[len -1] == '/')
+		s_files->path[len -1] = '\0';
 
 	// if "/switch/dir" else ../ is "/"
 	if (strchr(&s_files->path[1], '/')) {
-		strcpy(old_path, s_files->path);
-		tmp = strrchr(old_path, '/');
+		tmp = strrchr(s_files->path, '/');
 		if (tmp) {
 			*tmp = '\0';
 		}
 	} else {
-		old_path[0] = '/';
+		strcpy(s_files->path, "/");
 	}
 
-	change_directory(s_files, old_path);
+	change_directory(s_files, 0);
 }
 
 int main(void)
@@ -135,10 +140,6 @@ int main(void)
 		hidScanInput();
 		u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
-		// DEBUG
-		if (s_files->begin)
-			printf("[DEBUG] Current dir = %s\n, path = %s\n\n", s_files->path, s_files->begin->path);
-
 		// Print all files in curent dir
 		print_directory(s_files->begin, s_files->cursor);
 
@@ -161,7 +162,7 @@ int main(void)
 
 		if (kDown & KEY_A) {
 			if (s_files->begin) {
-				change_directory(s_files, NULL);
+				change_directory(s_files, SELECT_DIR);
 			}
 		}
 

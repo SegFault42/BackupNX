@@ -9,8 +9,10 @@ typedef struct		t_files_select
 	struct t_files_select	*next;
 }					t_files_select;
 
-t_files_select	*add_tails(t_files_select *files);
+//void			add_tails(t_files_select *files);
 void			free_list(t_files_select *begin);
 size_t			count_elem_in_list(t_files_select *list);
+t_files_select	*create_node(void);
+t_files_select	*insert_node(t_files_select *begin, t_files_select *node);
 
 #endif

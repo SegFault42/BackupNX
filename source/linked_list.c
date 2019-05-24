@@ -28,29 +28,60 @@ void	free_list(t_files_select *list)
 	}
 }
 
-// add new node and return it
-t_files_select	*add_tails(t_files_select *node)
+t_files_select	*create_node(void)
 {
-	t_files_select	*first = node; // keep first elem
-	t_files_select	*new_node = NULL;
+	t_files_select	*new_node = calloc(sizeof(t_files_select), 1);
 
-	// alloc new node
-	new_node = calloc(sizeof(t_files_select), 1);
 	if (new_node == NULL)
 		{ return (NULL); }
 
-	if (node == NULL) {
-		node = new_node;
-		return (node);
+	return (new_node);
+}
+
+
+// add new node and return it
+static void	add_tails(t_files_select *begin, t_files_select *node)
+{
+	t_files_select	*tmp = begin; // keep first elem
+
+	while (tmp->next) {
+		tmp = tmp->next;
+	}
+	tmp->next = node;
+}
+
+t_files_select	*insert_node(t_files_select *begin, t_files_select *node)
+{
+	t_files_select	*tmp = begin;
+	int				cmp = 0;
+
+	if (begin == NULL) {
+		begin = node;
 	} else {
-		while (node->next)
-			{ node = node->next; }
-		node->next = new_node;
+		while (tmp) {
+			cmp = strcmp(node->file_name, tmp->file_name);
+
+			if (cmp < 0) {
+				if (begin == tmp) {
+					// add_head();
+					node->next = begin;
+					begin = node;
+				} else if (tmp->next == NULL) {
+					add_tails(tmp, node);
+				} else {
+					// add_after();
+					node->next = tmp->next;
+					tmp->next = node;
+				}
+				break ;
+			}
+			tmp = tmp->next;
+		}
 	}
 
-	node = first;
-
-	return (new_node);
+	return (begin);
+	// a						hello
+	// bonjour, ca_va, dear,        makaveli
 }
 
 /*t_files_select	*add_tails(void *fil, const char *name)*/

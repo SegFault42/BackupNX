@@ -14,4 +14,6 @@
 #include "file.h"
 #include "linked_list.h"
 
+#define SELECT_DIR	1
+
 #endif

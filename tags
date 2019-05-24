@@ -70,7 +70,7 @@ TOPDIR	Makefile	/^export TOPDIR	:=	$(CURDIR)$/;"	m
 VPATH	Makefile	/^export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)\/$(dir)) \\$/;"	m
 WHITE	pc/Makefile	/^WHITE = \\033[37m$/;"	m
 add_tails	pc/source/linked_list.c	/^s_files_select	*add_tails(s_files_select *node)$/;"	f	typeref:typename:s_files_select *
-add_tails	source/linked_list.c	/^s_files_select	*add_tails(s_files_select *node)$/;"	f	typeref:typename:s_files_select *
+add_tails	source/linked_list.c	/^t_files_select	*add_tails(t_files_select *node)$/;"	f	typeref:typename:t_files_select *
 address_space_type	npdm.json	/^    "address_space_type"     : 1,$/;"	n
 all	Makefile	/^all	:	$(OUTPUT).nro$/;"	t
 all	Makefile	/^all	:	$(OUTPUT).nsp$/;"	t
@@ -78,24 +78,30 @@ all	Makefile	/^all: $(BUILD)$/;"	t
 all	pc/Makefile	/^all: $(NAME)$/;"	t
 allow_debug	npdm.json	/^            "allow_debug" : true,$/;"	b	object:kernel_capabilities.debug_flags
 application_type	npdm.json	/^        "application_type"   : 1,$/;"	n	object:kernel_capabilities
-chooseFileToUpload	source/file.c	/^void	chooseFileToUpload(s_files_select *files)$/;"	f	typeref:typename:void
+back_directory	source/main.c	/^void	back_directory(t_files *s_files)$/;"	f	typeref:typename:void
+begin	include/file.h	/^	t_files_select	*begin;				\/\/ pointer to move in linked list$/;"	m	struct:s_files	typeref:typename:t_files_select *
+change_directory	source/main.c	/^void	change_directory(t_files *s_files, char *dir)$/;"	f	typeref:typename:void
+chooseFileToUpload	source/file.c	/^void	chooseFileToUpload(t_files_select *files)$/;"	f	typeref:typename:void
 clean	Makefile	/^clean:$/;"	t
 clean	pc/Makefile	/^clean:$/;"	t
-count_elem_in_list	source/linked_list.c	/^size_t	count_elem_in_list(s_files_select *list)$/;"	f	typeref:typename:size_t
+count_elem_in_list	source/linked_list.c	/^size_t	count_elem_in_list(t_files_select *list)$/;"	f	typeref:typename:size_t
+cursor	include/file.h	/^	size_t			cursor;				\/\/ cursor to select file$/;"	m	struct:s_files	typeref:typename:size_t
 debug_flags	npdm.json	/^        "debug_flags" : {$/;"	o	object:kernel_capabilities
 default_cpu_id	npdm.json	/^    "default_cpu_id"         : 0,$/;"	n
 fclean	pc/Makefile	/^fclean:$/;"	t
-file_name	include/linked_list.h	/^	char					*file_name;	\/\/ name of file$/;"	m	struct:s_files_select	typeref:typename:char *
+file_name	include/linked_list.h	/^	char					*file_name;	\/\/ name of file$/;"	m	struct:t_files_select	typeref:typename:char *
 file_name	pc/include/linked_list.h	/^	char					*file_name;	\/\/ name of file$/;"	m	struct:s_files_select	typeref:typename:char *
+files	include/file.h	/^	t_files_select	*files;				\/\/ head pointer$/;"	m	struct:s_files	typeref:typename:t_files_select *
 filesystem_access	npdm.json	/^    "filesystem_access" : {$/;"	o
 force_debug	npdm.json	/^            "force_debug" : true$/;"	b	object:kernel_capabilities.debug_flags
-free_list	source/linked_list.c	/^void	free_list(s_files_select *list)$/;"	f	typeref:typename:void
+free_list	source/linked_list.c	/^void	free_list(t_files_select *list)$/;"	f	typeref:typename:void
 getFilesList	pc/source/file.c	/^s_files_select	*getFilesList(const char *path)$/;"	f	typeref:typename:s_files_select *
-getFilesList	source/file.c	/^s_files_select	*getFilesList(const char *path)$/;"	f	typeref:typename:s_files_select *
+getFilesList	source/file.c	/^t_files_select	*getFilesList(const char *path)$/;"	f	typeref:typename:t_files_select *
 handle_table_size	npdm.json	/^        "handle_table_size"  : 512,$/;"	n	object:kernel_capabilities
 highest_cpu_id	npdm.json	/^            "highest_cpu_id"          : 2,$/;"	n	object:kernel_capabilities.kernel_flags
 highest_thread_priority	npdm.json	/^            "highest_thread_priority" : 59,$/;"	n	object:kernel_capabilities.kernel_flags
 icons	Makefile	/^	icons := $(wildcard *.jpg)$/;"	m
+isFileExist	source/file.c	/^bool	isFileExist(const char *file)$/;"	f	typeref:typename:bool
 is_64_bit	npdm.json	/^    "is_64_bit"              : true,$/;"	b
 is_retail	npdm.json	/^    "is_retail"              : true,$/;"	b
 jsons	Makefile	/^	jsons := $(wildcard *.json)$/;"	m
@@ -108,21 +114,27 @@ main	source/main.c	/^int main(void)$/;"	f	typeref:typename:int
 main_thread_priority	npdm.json	/^    "main_thread_priority"   : 44,$/;"	n
 main_thread_stack_size	npdm.json	/^    "main_thread_stack_size" : "0x100000",$/;"	s
 min_kernel_version	npdm.json	/^        "min_kernel_version" : "0x30",$/;"	s	object:kernel_capabilities
+move_down	source/main.c	/^void	move_down(t_files *s_files)$/;"	f	typeref:typename:void
+move_up	source/main.c	/^void	move_up(t_files *s_files)$/;"	f	typeref:typename:void
 name	npdm.json	/^    "name"                   : "Application",$/;"	s
-next	include/linked_list.h	/^	struct s_files_select	*next;$/;"	m	struct:s_files_select	typeref:struct:s_files_select *
+nb_elem	include/file.h	/^	size_t			nb_elem;			\/\/ nb of files in cur dir$/;"	m	struct:s_files	typeref:typename:size_t
+next	include/linked_list.h	/^	struct t_files_select	*next;$/;"	m	struct:t_files_select	typeref:struct:t_files_select *
 next	pc/include/linked_list.h	/^	struct s_files_select	*next;$/;"	m	struct:s_files_select	typeref:struct:s_files_select *
-path	include/linked_list.h	/^	char					path[PATH_MAX];		\/\/ path of file$/;"	m	struct:s_files_select	typeref:typename:char[]
+old_path	include/file.h	/^	char			old_path[PATH_MAX];	\/\/ old path name$/;"	m	struct:s_files	typeref:typename:char[]
+path	include/file.h	/^	char			path[PATH_MAX];		\/\/ current path name$/;"	m	struct:s_files	typeref:typename:char[]
+path	include/linked_list.h	/^	char					path[PATH_MAX];		\/\/ path of file$/;"	m	struct:t_files_select	typeref:typename:char[]
 path	pc/include/linked_list.h	/^	char					*path;		\/\/ path of file$/;"	m	struct:s_files_select	typeref:typename:char *
 permissions	npdm.json	/^        "permissions" : "0xFFFFFFFFFFFFFFFF"$/;"	s	object:filesystem_access
 pool_partition	npdm.json	/^    "pool_partition"         : 0,$/;"	n
+print_directory	source/main.c	/^void	print_directory(t_files_select *begin, size_t cursor)$/;"	f	typeref:typename:void
 process_category	npdm.json	/^    "process_category"       : 0,$/;"	n
 re	pc/Makefile	/^re: fclean all$/;"	t
-s_files_select	include/linked_list.h	/^typedef struct		s_files_select$/;"	s
-s_files_select	include/linked_list.h	/^}					s_files_select;$/;"	t	typeref:struct:s_files_select
+s_files	include/file.h	/^typedef struct		s_files$/;"	s
 s_files_select	pc/include/linked_list.h	/^typedef struct		s_files_select$/;"	s
 s_files_select	pc/include/linked_list.h	/^}					s_files_select;$/;"	t	typeref:struct:s_files_select
-select	include/linked_list.h	/^	bool					select;$/;"	m	struct:s_files_select	typeref:typename:bool
+select	include/linked_list.h	/^	bool					select;$/;"	m	struct:t_files_select	typeref:typename:bool
 select	pc/include/linked_list.h	/^	bool					select;$/;"	m	struct:s_files_select	typeref:typename:bool
+select_file	source/main.c	/^void	select_file(t_files *s_files)$/;"	f	typeref:typename:void
 service_access	npdm.json	/^    "service_access" : {$/;"	o
 svcAcceptSession	npdm.json	/^            "svcAcceptSession"                   : "0x41",$/;"	s	object:kernel_capabilities.syscalls
 svcArbitrateLock	npdm.json	/^            "svcArbitrateLock"                   : "0x1A",$/;"	s	object:kernel_capabilities.syscalls
@@ -229,6 +241,9 @@ svcWaitProcessWideKeyAtomic	npdm.json	/^            "svcWaitProcessWideKeyAtomic
 svcWaitSynchronization	npdm.json	/^            "svcWaitSynchronization"             : "0x18",$/;"	s	object:kernel_capabilities.syscalls
 svcWriteDebugProcessMemory	npdm.json	/^            "svcWriteDebugProcessMemory"         : "0x6B",$/;"	s	object:kernel_capabilities.syscalls
 syscalls	npdm.json	/^        "syscalls" : {$/;"	o	object:kernel_capabilities
+t_files	include/file.h	/^}					t_files;$/;"	t	typeref:struct:s_files
+t_files_select	include/linked_list.h	/^typedef struct		t_files_select$/;"	s
+t_files_select	include/linked_list.h	/^}					t_files_select;$/;"	t	typeref:struct:t_files_select
 title_id	npdm.json	/^    "title_id"               : "0x0101000000000000",$/;"	s
 title_id_range_max	npdm.json	/^    "title_id_range_max"     : "0x01ffffffffffffff",$/;"	s
 title_id_range_min	npdm.json	/^    "title_id_range_min"     : "0x0100000000000000",$/;"	s
