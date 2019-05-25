@@ -16,6 +16,7 @@ typedef struct		s_files
 
 bool			isFileExist(const char *file);
 t_files_select	*getFilesList(const char *path);
+void			get_files(t_files *s_files);
 void			chooseFileToUpload(t_files_select *);
 
 #endif
