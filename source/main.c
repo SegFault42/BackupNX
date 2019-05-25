@@ -107,6 +107,11 @@ void	back_directory(t_files *s_files)
 	char	*tmp = NULL;
 	size_t	len = 0;
 
+	// if already in / return
+	if (!strcmp(s_files->path, "/")) {
+		return ;
+	}
+
 	len = strlen(s_files->path);
 
 	// remove last /
@@ -151,7 +156,7 @@ int main(void)
 		u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
 		if (s_files && s_files->begin)
-		printf("%s | %s\n", s_files->begin->path, s_files->path);
+			printf("%s | %s\n", s_files->begin->path, s_files->path);
 
 		// Print all files in curent dir
 		print_directory(s_files->begin, s_files->cursor);
