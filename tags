@@ -81,10 +81,13 @@ filesystem_access	npdm.json	/^    "filesystem_access" : {$/;"	o
 force_debug	npdm.json	/^            "force_debug" : true$/;"	b	object:kernel_capabilities.debug_flags
 free_list	source/linked_list.c	/^void	free_list(t_files_select *list)$/;"	f	typeref:typename:void
 getFilesList	source/file.c	/^t_files_select	*getFilesList(const char *path)$/;"	f	typeref:typename:t_files_select *
+get_files	source/main.c	/^void	get_files(t_files *s_files)$/;"	f	typeref:typename:void
 handle_table_size	npdm.json	/^        "handle_table_size"  : 512,$/;"	n	object:kernel_capabilities
 highest_cpu_id	npdm.json	/^            "highest_cpu_id"          : 2,$/;"	n	object:kernel_capabilities.kernel_flags
 highest_thread_priority	npdm.json	/^            "highest_thread_priority" : 59,$/;"	n	object:kernel_capabilities.kernel_flags
 icons	Makefile	/^	icons := $(wildcard *.jpg)$/;"	m
+init	source/main.c	/^t_files	*init(void)$/;"	f	typeref:typename:t_files *
+input	source/main.c	/^bool	input(u64 kDown, t_files *s_files)$/;"	f	typeref:typename:bool
 insert_node	source/linked_list.c	/^t_files_select	*insert_node(t_files_select *begin, t_files_select *node)$/;"	f	typeref:typename:t_files_select *
 isFileExist	source/file.c	/^bool	isFileExist(const char *file)$/;"	f	typeref:typename:bool
 is_64_bit	npdm.json	/^    "is_64_bit"              : true,$/;"	b

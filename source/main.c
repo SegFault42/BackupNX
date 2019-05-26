@@ -3,7 +3,7 @@
 void	print_directory(t_files_select *begin, size_t cursor)
 {
 	size_t	elem = 0;
-	struct stat		st;
+	struct stat		st = {0};
 
 	if (begin == NULL) {
 		printf("No such file or directory\n");
@@ -22,16 +22,19 @@ void	print_directory(t_files_select *begin, size_t cursor)
 				printf("[ ] ");
 			}
 
-			stat(begin->path, &st);
-
-			// Print filename
-			if (S_ISDIR(st.st_mode)) {
-				printf("%s%s%s\n", CONSOLE_YELLOW, begin->file_name, CONSOLE_RESET);
-			} else if (S_ISREG(st.st_mode)) {
-				printf("%s%s%s\n", CONSOLE_CYAN, begin->file_name, CONSOLE_RESET);
+			if (begin->path == NULL || stat(begin->path, &st) == -1) {
+				printf("%sFile error%s\n", CONSOLE_RED, CONSOLE_RESET);
 			} else {
-				printf("%s\n", begin->file_name);
+				// Print filename
+				if (S_ISDIR(st.st_mode)) {
+					printf("%s%s%s\n", CONSOLE_YELLOW, begin->file_name, CONSOLE_RESET);
+				} else if (S_ISREG(st.st_mode)) {
+					printf("%s%s%s\n", CONSOLE_CYAN, begin->file_name, CONSOLE_RESET);
+				} else {
+					printf("%s\n", begin->file_name);
+				}
 			}
+
 			begin = begin->next;
 		}
 	}
