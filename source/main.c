@@ -1,6 +1,8 @@
 #include "common.h"
 
-void	print_directory(t_files_select *begin, size_t cursor)
+#define MAX_LINE	42
+
+void	print_directory(t_files_select *begin, size_t cursor, size_t nb_elem)
 {
 	size_t	elem = 0;
 	struct stat		st = {0};
@@ -8,13 +10,21 @@ void	print_directory(t_files_select *begin, size_t cursor)
 	if (begin == NULL) {
 		printf("No such file or directory\n");
 	} else {
-		for (; begin; elem++) {
+		/*int incr = cursor - MAX_LINE;*/
+
+		/*if (cursor > MAX_LINE) {*/
+			/*while (incr) {*/
+				/*begin = begin->next;*/
+				/*--incr;*/
+			/*}*/
+		/*}*/
+		for (int i = 0; begin && i < MAX_LINE; elem++, i++) {
 			// Print cursor
 			if (elem == cursor) {
 	 			printf("> ");
 			} else {
 				printf("  "); }
-	
+
 			// Print selected
 			if (begin->select == true) {
 				printf("[X] ");
@@ -200,11 +210,12 @@ int main(void)
 		hidScanInput();
 		u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
-		if (s_files && s_files->begin)
+		if (s_files && s_files->begin) {
 			printf("%s | %s\n", s_files->begin->path, s_files->path);
+		}
 
 		// Print all files in curent dir
-		print_directory(s_files->begin, s_files->cursor);
+		print_directory(s_files->begin, s_files->cursor, s_files->nb_elem);
 
 		// point begin to begining of the lst
 		if (s_files->begin == NULL) {

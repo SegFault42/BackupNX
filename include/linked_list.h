@@ -12,6 +12,7 @@ typedef struct		t_files_select
 	uint8_t					type;
 
 	struct t_files_select	*next;
+	struct t_files_select	*prev;
 }					t_files_select;
 
 //void			add_tails(t_files_select *files);

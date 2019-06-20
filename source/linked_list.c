@@ -78,5 +78,6 @@ t_files_select	*insert_node(t_files_select *begin, t_files_select *node)
 			tmp = tmp->next;
 		}
 	}
+
 	return (begin);
 }
