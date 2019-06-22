@@ -66,6 +66,7 @@ t_files_select	*insert_node(t_files_select *begin, t_files_select *node)
 				begin = node;
 				break ;
 			} else if (tmp->next == NULL) {
+				// add tail
 				add_tails(tmp, node);
 				break ;
 			} else if (cmp > 0 && strcmp(node->file_name, tmp->next->file_name) < 0) {

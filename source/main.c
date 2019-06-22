@@ -1,55 +1,5 @@
 #include "common.h"
 
-#define MAX_LINE	42
-
-void	print_directory(t_files_select *begin, size_t cursor, size_t nb_elem)
-{
-	size_t	elem = 0;
-	struct stat		st = {0};
-
-	if (begin == NULL) {
-		printf("No such file or directory\n");
-	} else {
-		/*int incr = cursor - MAX_LINE;*/
-
-		/*if (cursor > MAX_LINE) {*/
-			/*while (incr) {*/
-				/*begin = begin->next;*/
-				/*--incr;*/
-			/*}*/
-		/*}*/
-		for (int i = 0; begin && i < MAX_LINE; elem++, i++) {
-			// Print cursor
-			if (elem == cursor) {
-	 			printf("> ");
-			} else {
-				printf("  "); }
-
-			// Print selected
-			if (begin->select == true) {
-				printf("[X] ");
-			} else {
-				printf("[ ] ");
-			}
-
-			if (begin->path == NULL || stat(begin->path, &st) == -1) {
-				printf("%sFile error%s\n", CONSOLE_RED, CONSOLE_RESET);
-			} else {
-				// Print filename
-				if (S_ISDIR(st.st_mode)) {
-					printf("%s%s%s\n", CONSOLE_YELLOW, begin->file_name, CONSOLE_RESET);
-				} else if (S_ISREG(st.st_mode)) {
-					printf("%s%s%s\n", CONSOLE_CYAN, begin->file_name, CONSOLE_RESET);
-				} else {
-					printf("%s\n", begin->file_name);
-				}
-			}
-
-			begin = begin->next;
-		}
-	}
-}
-
 void	change_directory(t_files *s_files, bool mode)
 {
 	t_files_select	*s_files_save = s_files->begin;
@@ -140,7 +90,17 @@ void	back_directory(t_files *s_files)
 	change_directory(s_files, 0);
 }
 
-bool	input(u64 kDown, t_files *s_files)
+static void	update_list_files(t_files_select *s_files, char **list_files)
+{
+	while (s_files) {
+		printf("%s[%s]%s", CONSOLE_RED, s_files->file_name, CONSOLE_RESET);
+		s_files = s_files->next;
+	}
+	consoleUpdate(NULL);
+	sleep(1);
+}
+
+bool	input(u64 kDown, t_files *s_files, char **list_files)
 {
 	if (kDown & KEY_DOWN) {
 		move_down(s_files);
@@ -155,6 +115,7 @@ bool	input(u64 kDown, t_files *s_files)
 	}
 
 	if (kDown & KEY_A) {
+		update_list_files(s_files->begin, list_files);
 		if (s_files->begin) {
 			change_directory(s_files, SELECT_DIR);
 		}
@@ -195,9 +156,13 @@ void	get_files(t_files *s_files)
 	s_files->cursor = 0;
 }
 
+// tab = 	{"dir_name", "file1", "file2"}
+// 			{"dir_name", "file1", "file2"}
+
 int main(void)
 {
-	t_files			*s_files = NULL;
+	t_files	*s_files = NULL;
+	char	**list_files = NULL;
 
 	s_files = init();
 	if (s_files == NULL)
@@ -222,7 +187,7 @@ int main(void)
 			s_files->begin = s_files->files;
 		}
 
-		if (input(kDown, s_files) == false)
+		if (input(kDown, s_files, list_files) == false)
 			{ break ; }
 
 		consoleUpdate(NULL);

@@ -4,7 +4,7 @@
 !_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
-!_TAG_PROGRAM_VERSION	0.0.0	/45968eff/
+!_TAG_PROGRAM_VERSION	0.0.0	/3fdf28bc/
 $(BUILD)	Makefile	/^$(BUILD):$/;"	t
 $(OFILES_SRC)	Makefile	/^$(OFILES_SRC)	: $(HFILES_BIN)$/;"	t
 $(OUTPUT).elf	Makefile	/^$(OUTPUT).elf	:	$(OFILES)$/;"	t
@@ -46,10 +46,12 @@ LIBDIRS	Makefile	/^LIBDIRS	:= $(PORTLIBS) $(LIBNX)$/;"	m
 LIBPATHS	Makefile	/^export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)\/lib)$/;"	m
 LIBS	Makefile	/^LIBS	:= -lcurl -lmbedtls -lmbedx509 -lmbedcrypto -lz -lnx$/;"	m
 LINKED_LIST_H	include/linked_list.h	/^#define LINKED_LIST_H$/;"	d
+MAX_LINE	include/print.h	/^#define MAX_LINE	/;"	d
 OFILES	Makefile	/^export OFILES 	:=	$(OFILES_BIN) $(OFILES_SRC)$/;"	m
 OFILES_BIN	Makefile	/^export OFILES_BIN	:=	$(addsuffix .o,$(BINFILES))$/;"	m
 OFILES_SRC	Makefile	/^export OFILES_SRC	:=	$(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)$/;"	m
 OUTPUT	Makefile	/^export OUTPUT	:=	$(CURDIR)\/$(TARGET)$/;"	m
+PRINT_H	include/print.h	/^#define PRINT_H$/;"	d
 REGULAR_FILE	include/linked_list.h	/^#define REGULAR_FILE	/;"	d
 SELECT_DIR	include/common.h	/^#define SELECT_DIR	/;"	d
 SFILES	Makefile	/^SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)\/*.s)))$/;"	m
@@ -111,7 +113,8 @@ path	include/file.h	/^	char			path[PATH_MAX];		\/\/ current path name$/;"	m	stru
 path	include/linked_list.h	/^	char					path[PATH_MAX];		\/\/ path of file$/;"	m	struct:t_files_select	typeref:typename:char[]
 permissions	npdm.json	/^        "permissions" : "0xFFFFFFFFFFFFFFFF"$/;"	s	object:filesystem_access
 pool_partition	npdm.json	/^    "pool_partition"         : 0,$/;"	n
-print_directory	source/main.c	/^void	print_directory(t_files_select *begin, size_t cursor)$/;"	f	typeref:typename:void
+prev	include/linked_list.h	/^	struct t_files_select	*prev;$/;"	m	struct:t_files_select	typeref:struct:t_files_select *
+print_directory	source/print.c	/^void	print_directory(t_files_select *begin, size_t cursor, size_t nb_elem)$/;"	f	typeref:typename:void
 process_category	npdm.json	/^    "process_category"       : 0,$/;"	n
 s_files	include/file.h	/^typedef struct		s_files$/;"	s
 select	include/linked_list.h	/^	bool					select;$/;"	m	struct:t_files_select	typeref:typename:bool
@@ -229,3 +232,4 @@ title_id	npdm.json	/^    "title_id"               : "0x0101000000000000",$/;"	s
 title_id_range_max	npdm.json	/^    "title_id_range_max"     : "0x01ffffffffffffff",$/;"	s
 title_id_range_min	npdm.json	/^    "title_id_range_min"     : "0x0100000000000000",$/;"	s
 type	include/linked_list.h	/^	uint8_t					type;$/;"	m	struct:t_files_select	typeref:typename:uint8_t
+upload	upload.c	/^void	upload()$/;"	f	typeref:typename:void
