@@ -11,8 +11,10 @@ void	print_directory(t_files_select *begin, size_t cursor, size_t nb_elem)
 		// Scrolling
 		int incr = cursor - MAX_LINE;
 
-		if (cursor > MAX_LINE) {
-			while (incr) {
+		/*PRINT_DEBUG*/
+		/*printf("%d", incr);*/
+		if (cursor >= MAX_LINE) {
+			while (incr >=0) {
 				begin = begin->next;
 				--incr;
 			}

@@ -17,4 +17,6 @@
 
 #define SELECT_DIR	1
 
+#define PRINT_DEBUG printf("\x1b[16;20H");
+
 #endif
