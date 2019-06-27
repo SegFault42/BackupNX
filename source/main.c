@@ -90,18 +90,78 @@ void	back_directory(t_files *s_files)
 	change_directory(s_files, 0);
 }
 
-static void	update_list_files(t_files_select *s_files, char **list_files)
+static void	free_2d_array(char ***array)
 {
-	while (s_files) {
-		printf("%s[%s]%s", CONSOLE_RED, s_files->file_name, CONSOLE_RESET);
-		s_files = s_files->next;
+	for (size_t idx = 0; *array[idx]; idx++) {
+		PRINT_DEBUG
+		printf("\n%p", (void *)&(array[idx]));
+		/*free(*array[idx]);*/
+		/**array[idx] = NULL;*/
 	}
-	consoleUpdate(NULL);
-	sleep(1);
+
+	/*free(*array);*/
+	/**array = NULL;*/
 }
 
-bool	input(u64 kDown, t_files *s_files, char **list_files)
+static char	**update_list_files(t_files_select *s_files)
 {
+	char	**list_files = NULL;
+
+	if (list_files == NULL) {
+		list_files = calloc(sizeof(char *), 1 + 1); // 1st ptr to content, 2nd to NULL
+		if (list_files == NULL) {
+			// TODO : print error if alloc fail
+			return (NULL);
+		}
+	}
+
+	// first ele, the directory
+	list_files[0] = strdup(s_files->path);
+
+	for (int nb_elem = 1; s_files;) {
+		if (s_files->select == true) {
+			// nb_elem + new_elem + NULL
+			list_files = realloc(list_files, sizeof(char *) * (nb_elem + 1 + 1));
+			if (list_files == NULL) {
+				return (NULL);
+			}
+			list_files[nb_elem] = strdup(s_files->file_name);
+			nb_elem++;
+		}
+		s_files = s_files->next;
+	}
+
+	// nothing to add, no files selected
+	if (list_files[1] == NULL) {
+		// free array
+
+		PRINT_DEBUG
+		printf("%p", (void *)&list_files[0]);
+
+	/*for (size_t idx = 0; list_files[idx]; idx++) {*/
+		/*free(list_files[idx]);*/
+		/*list_files[idx] = NULL;*/
+	/*}*/
+
+	/*free(list_files);*/
+	/*list_files = NULL;*/
+
+		free_2d_array(&list_files);
+	}
+
+	return (list_files);
+}
+
+typedef struct	s_list_files
+{
+	char	directory[PATH_MAX];
+	char	**files;
+}				t_list_files;
+
+bool	input(u64 kDown, t_files *s_files)
+{
+	char	**list_files = NULL;
+
 	if (kDown & KEY_DOWN) {
 		move_down(s_files);
 	}
@@ -115,9 +175,16 @@ bool	input(u64 kDown, t_files *s_files, char **list_files)
 	}
 
 	if (kDown & KEY_A) {
-		update_list_files(s_files->begin, list_files);
 		if (s_files->begin) {
+			list_files = update_list_files(s_files->begin);
 			change_directory(s_files, SELECT_DIR);
+
+			if (list_files != NULL) {
+				print_2d_array(list_files);
+				consoleUpdate(NULL);
+				sleep(4);
+				/*free_2d_array(list_files);*/
+			}
 		}
 	}
 
@@ -128,6 +195,7 @@ bool	input(u64 kDown, t_files *s_files, char **list_files)
 	if (kDown & KEY_PLUS) {
 		return (false); // break in order to return to hbmenu
 	}
+
 
 	return (true);
 }
@@ -162,7 +230,6 @@ void	get_files(t_files *s_files)
 int main(void)
 {
 	t_files	*s_files = NULL;
-	char	**list_files = NULL;
 
 	s_files = init();
 	if (s_files == NULL)
@@ -187,7 +254,7 @@ int main(void)
 			s_files->begin = s_files->files;
 		}
 
-		if (input(kDown, s_files, list_files) == false)
+		if (input(kDown, s_files) == false)
 			{ break ; }
 
 		consoleUpdate(NULL);
