@@ -1,54 +1,72 @@
 #include "common.h"
 
+// Incr linked list to scroll
+static t_files_select	*scrolling(size_t cursor, t_files_select *begin)
+{
+	int incr = cursor - MAX_LINE;
+
+	if (cursor >= MAX_LINE) {
+		while (incr >= 0) {
+			begin = begin->next;
+			--incr;
+		}
+	}
+
+	return (begin);
+}
+
+// Print cursor
+static void	print_cursor(size_t elem, size_t cursor, int i)
+{
+	if (elem == cursor) {
+		printf("> ");
+	} else if (cursor >= MAX_LINE -1 && i == MAX_LINE -1) {
+		printf("> ");
+	} else {
+		printf("  "); }
+}
+
+// Print selected file
+static void	print_selected_file(bool select)
+{
+	if (select == true) {
+		printf("[X] ");
+	} else {
+		printf("[ ] ");
+	}
+}
+
+// Print file name
+static void	print_filename(t_files_select *begin)
+{
+	struct stat		st = {0};
+
+	if (begin->path == NULL || stat(begin->path, &st) == -1) {
+		printf("%sFile error%s\n", CONSOLE_RED, CONSOLE_RESET);
+	} else {
+		if (S_ISDIR(st.st_mode)) {
+			printf("%s%s%s\n", CONSOLE_YELLOW, begin->file_name, CONSOLE_RESET);
+		} else if (S_ISREG(st.st_mode)) {
+			printf("%s%s%s\n", CONSOLE_CYAN, begin->file_name, CONSOLE_RESET);
+		} else {
+			printf("%s\n", begin->file_name);
+		}
+	}
+}
+
 void	print_directory(t_files_select *begin, size_t cursor, size_t nb_elem)
 {
 	size_t			elem = 0;
-	struct stat		st = {0};
 
 	if (begin == NULL) {
-		printf("No such file or directory\n");
+		printf("%s%s%s", CONSOLE_RED, "No such file or directory\n", CONSOLE_RESET);
 	} else {
-		// Scrolling
-		int incr = cursor - MAX_LINE;
+		begin = scrolling(cursor, begin);
 
-		/*PRINT_DEBUG*/
-		/*printf("%d", incr);*/
-		if (cursor >= MAX_LINE) {
-			while (incr >=0) {
-				begin = begin->next;
-				--incr;
-			}
-		}
-		for (int i = 0; begin && i < MAX_LINE; elem++, i++) {
-			// Print cursor
-			if (elem == cursor) {
-	 			printf("> ");
-			} else if (cursor >= MAX_LINE -1 && i == MAX_LINE -1) {
-	 			printf("> ");
-			} else {
-				printf("  "); }
-
-			// Print selected
-			if (begin->select == true) {
-				printf("[X] ");
-			} else {
-				printf("[ ] ");
-			}
-
-			if (begin->path == NULL || stat(begin->path, &st) == -1) {
-				printf("%sFile error%s\n", CONSOLE_RED, CONSOLE_RESET);
-			} else {
-				// Print filename
-				if (S_ISDIR(st.st_mode)) {
-					printf("%s%s%s\n", CONSOLE_YELLOW, begin->file_name, CONSOLE_RESET);
-				} else if (S_ISREG(st.st_mode)) {
-					printf("%s%s%s\n", CONSOLE_CYAN, begin->file_name, CONSOLE_RESET);
-				} else {
-					printf("%s\n", begin->file_name);
-				}
-			}
-
-			begin = begin->next;
+		for (int i = 0; begin && i < MAX_LINE; elem++, i++, begin = begin->next) {
+			print_cursor(elem, cursor, i);
+			print_selected_file(begin->select);
+			print_filename(begin);
 		}
 	}
 }

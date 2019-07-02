@@ -213,14 +213,6 @@ void	de_init(t_files *s_files)
 	free_list(s_files->files);
 }
 
-void	get_files(t_files *s_files)
-{
-	s_files->files = getFilesList(s_files->path);
-	s_files->begin = s_files->files;
-	s_files->nb_elem = count_elem_in_list(s_files->begin);
-	s_files->cursor = 0;
-}
-
 // tab = 	{"dir_name", "file1", "file2"}
 // 			{"dir_name", "file1", "file2"}
 
@@ -239,6 +231,7 @@ int main(void)
 		hidScanInput();
 		u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
+		// Only for debug
 		if (s_files && s_files->begin) {
 			printf("%s | %s\n", s_files->begin->path, s_files->path);
 		}
