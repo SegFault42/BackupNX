@@ -11,7 +11,8 @@ bool	isFileExist(const char *file)
 	return (true);
 }
 
-t_files_select	*getFilesList(const char *path)
+// Get files in current directory
+static t_files_select	*getFilesList(const char *path)
 {
 	t_files_select	*new_node = NULL;
 	t_files_select	*begin = NULL;
@@ -32,7 +33,7 @@ t_files_select	*getFilesList(const char *path)
 
 			strcat(new_node->path, path);
 			if (new_node->path[strlen(new_node->path) -1] != '/')
-				strcat(new_node->path, "/");
+				{ strcat(new_node->path, "/"); }
 			strcat(new_node->path, new_node->file_name);
 
 			begin = insert_node(begin, new_node);
@@ -43,6 +44,16 @@ t_files_select	*getFilesList(const char *path)
 
 	return (begin);
 }
+
+// Get files in current directory and fill s_files struct
+void	get_files(t_files *s_files)
+{
+	s_files->files = getFilesList(s_files->path);
+	s_files->begin = s_files->files;
+	s_files->nb_elem = count_elem_in_list(s_files->begin);
+	s_files->cursor = 0;
+}
+
 
 void	chooseFileToUpload(t_files_select *files)
 {
