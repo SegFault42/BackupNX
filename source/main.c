@@ -92,21 +92,20 @@ void	back_directory(t_files *s_files)
 
 static void	free_2d_array(char ***array)
 {
-	for (size_t idx = 0; *array[idx]; idx++) {
-		PRINT_DEBUG
-		printf("\n%p", (void *)&(array[idx]));
-		/*free(*array[idx]);*/
-		/**array[idx] = NULL;*/
+	for (size_t idx = 0; array[idx]; idx++) {
+		free(*array[idx]);
+		*array[idx] = NULL;
 	}
 
-	/*free(*array);*/
-	/**array = NULL;*/
+	free(*array);
+	*array = NULL;
 }
 
 static char	**update_list_files(t_files_select *s_files)
 {
 	char	**list_files = NULL;
 
+	// Alloc 2d array
 	if (list_files == NULL) {
 		list_files = calloc(sizeof(char *), 1 + 1); // 1st ptr to content, 2nd to NULL
 		if (list_files == NULL) {
@@ -115,10 +114,11 @@ static char	**update_list_files(t_files_select *s_files)
 		}
 	}
 
-	// first ele, the directory
+	// add first elem (the directory name)
 	list_files[0] = strdup(s_files->path);
 
-	for (int nb_elem = 1; s_files;) {
+	// Add selected elem in array
+	for (int nb_elem = 1; s_files; s_files = s_files->next) {
 		if (s_files->select == true) {
 			// nb_elem + new_elem + NULL
 			list_files = realloc(list_files, sizeof(char *) * (nb_elem + 1 + 1));
@@ -128,24 +128,11 @@ static char	**update_list_files(t_files_select *s_files)
 			list_files[nb_elem] = strdup(s_files->file_name);
 			nb_elem++;
 		}
-		s_files = s_files->next;
 	}
 
 	// nothing to add, no files selected
 	if (list_files[1] == NULL) {
 		// free array
-
-		PRINT_DEBUG
-		printf("%p", (void *)&list_files[0]);
-
-	/*for (size_t idx = 0; list_files[idx]; idx++) {*/
-		/*free(list_files[idx]);*/
-		/*list_files[idx] = NULL;*/
-	/*}*/
-
-	/*free(list_files);*/
-	/*list_files = NULL;*/
-
 		free_2d_array(&list_files);
 	}
 
@@ -177,14 +164,16 @@ bool	input(u64 kDown, t_files *s_files)
 	if (kDown & KEY_A) {
 		if (s_files->begin) {
 			list_files = update_list_files(s_files->begin);
-			change_directory(s_files, SELECT_DIR);
-
 			if (list_files != NULL) {
+				// Print do debug
 				print_2d_array(list_files);
 				consoleUpdate(NULL);
 				sleep(4);
-				/*free_2d_array(list_files);*/
+				// free temporary
+				free_2d_array(&list_files);
 			}
+
+			change_directory(s_files, SELECT_DIR);
 		}
 	}
 
@@ -254,8 +243,9 @@ int main(void)
 			s_files->begin = s_files->files;
 		}
 
-		if (input(kDown, s_files) == false)
-			{ break ; }
+		if (input(kDown, s_files) == false) {
+			break ;
+		}
 
 		consoleUpdate(NULL);
 	}

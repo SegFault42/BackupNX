@@ -23,6 +23,7 @@ APP_JSON	Makefile	/^			export APP_JSON := $(TOPDIR)\/config.json$/;"	m
 APP_JSON	Makefile	/^		export APP_JSON := $(TOPDIR)\/$(TARGET).json$/;"	m
 APP_JSON	Makefile	/^	export APP_JSON := $(TOPDIR)\/$(CONFIG_JSON)$/;"	m
 ARCH	Makefile	/^ARCH	:=	-march=armv8-a -mtune=cortex-a57 -mtp=soft -fPIE$/;"	m
+ARRAY_H	include/array.h	/^#define ARRAY_H$/;"	d
 ASFLAGS	Makefile	/^ASFLAGS	:=	-g $(ARCH)$/;"	m
 BINFILES	Makefile	/^BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)\/*.*)))$/;"	m
 BUILD	Makefile	/^BUILD		:=	build$/;"	m
@@ -51,6 +52,7 @@ OFILES	Makefile	/^export OFILES 	:=	$(OFILES_BIN) $(OFILES_SRC)$/;"	m
 OFILES_BIN	Makefile	/^export OFILES_BIN	:=	$(addsuffix .o,$(BINFILES))$/;"	m
 OFILES_SRC	Makefile	/^export OFILES_SRC	:=	$(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)$/;"	m
 OUTPUT	Makefile	/^export OUTPUT	:=	$(CURDIR)\/$(TARGET)$/;"	m
+PRINT_DEBUG	include/common.h	/^#define PRINT_DEBUG /;"	d
 PRINT_H	include/print.h	/^#define PRINT_H$/;"	d
 REGULAR_FILE	include/linked_list.h	/^#define REGULAR_FILE	/;"	d
 SELECT_DIR	include/common.h	/^#define SELECT_DIR	/;"	d
@@ -72,15 +74,19 @@ begin	include/file.h	/^	t_files_select	*begin;				\/\/ pointer to move in linked
 change_directory	source/main.c	/^void	change_directory(t_files *s_files, bool mode)$/;"	f	typeref:typename:void
 chooseFileToUpload	source/file.c	/^void	chooseFileToUpload(t_files_select *files)$/;"	f	typeref:typename:void
 clean	Makefile	/^clean:$/;"	t
+count_2d_array	source/array.c	/^size_t	count_2d_array(char **array)$/;"	f	typeref:typename:size_t
 count_elem_in_list	source/linked_list.c	/^size_t	count_elem_in_list(t_files_select *list)$/;"	f	typeref:typename:size_t
 create_node	source/linked_list.c	/^t_files_select	*create_node(void)$/;"	f	typeref:typename:t_files_select *
 cursor	include/file.h	/^	size_t			cursor;				\/\/ cursor to select file$/;"	m	struct:s_files	typeref:typename:size_t
 debug_flags	npdm.json	/^        "debug_flags" : {$/;"	o	object:kernel_capabilities
 default_cpu_id	npdm.json	/^    "default_cpu_id"         : 0,$/;"	n
+directory	source/main.c	/^	char	directory[PATH_MAX];$/;"	m	struct:s_list_files	typeref:typename:char[]	file:
 file_name	include/linked_list.h	/^	char					*file_name;	\/\/ name of file$/;"	m	struct:t_files_select	typeref:typename:char *
 files	include/file.h	/^	t_files_select	*files;				\/\/ head pointer$/;"	m	struct:s_files	typeref:typename:t_files_select *
+files	source/main.c	/^	char	**files;$/;"	m	struct:s_list_files	typeref:typename:char **	file:
 filesystem_access	npdm.json	/^    "filesystem_access" : {$/;"	o
 force_debug	npdm.json	/^            "force_debug" : true$/;"	b	object:kernel_capabilities.debug_flags
+free_2d_array	source/main.c	/^static void	free_2d_array(char ***array)$/;"	f	typeref:typename:void	file:
 free_list	source/linked_list.c	/^void	free_list(t_files_select *list)$/;"	f	typeref:typename:void
 getFilesList	source/file.c	/^t_files_select	*getFilesList(const char *path)$/;"	f	typeref:typename:t_files_select *
 get_files	source/main.c	/^void	get_files(t_files *s_files)$/;"	f	typeref:typename:void
@@ -114,9 +120,11 @@ path	include/linked_list.h	/^	char					path[PATH_MAX];		\/\/ path of file$/;"	m	
 permissions	npdm.json	/^        "permissions" : "0xFFFFFFFFFFFFFFFF"$/;"	s	object:filesystem_access
 pool_partition	npdm.json	/^    "pool_partition"         : 0,$/;"	n
 prev	include/linked_list.h	/^	struct t_files_select	*prev;$/;"	m	struct:t_files_select	typeref:struct:t_files_select *
+print_2d_array	source/array.c	/^void	print_2d_array(char **array)$/;"	f	typeref:typename:void
 print_directory	source/print.c	/^void	print_directory(t_files_select *begin, size_t cursor, size_t nb_elem)$/;"	f	typeref:typename:void
 process_category	npdm.json	/^    "process_category"       : 0,$/;"	n
 s_files	include/file.h	/^typedef struct		s_files$/;"	s
+s_list_files	source/main.c	/^typedef struct	s_list_files$/;"	s	file:
 select	include/linked_list.h	/^	bool					select;$/;"	m	struct:t_files_select	typeref:typename:bool
 select_file	source/main.c	/^void	select_file(t_files *s_files)$/;"	f	typeref:typename:void
 service_access	npdm.json	/^    "service_access" : {$/;"	o
@@ -228,8 +236,10 @@ syscalls	npdm.json	/^        "syscalls" : {$/;"	o	object:kernel_capabilities
 t_files	include/file.h	/^}					t_files;$/;"	t	typeref:struct:s_files
 t_files_select	include/linked_list.h	/^typedef struct		t_files_select$/;"	s
 t_files_select	include/linked_list.h	/^}					t_files_select;$/;"	t	typeref:struct:t_files_select
+t_list_files	source/main.c	/^}				t_list_files;$/;"	t	typeref:struct:s_list_files	file:
 title_id	npdm.json	/^    "title_id"               : "0x0101000000000000",$/;"	s
 title_id_range_max	npdm.json	/^    "title_id_range_max"     : "0x01ffffffffffffff",$/;"	s
 title_id_range_min	npdm.json	/^    "title_id_range_min"     : "0x0100000000000000",$/;"	s
 type	include/linked_list.h	/^	uint8_t					type;$/;"	m	struct:t_files_select	typeref:typename:uint8_t
+update_list_files	source/main.c	/^static char	**update_list_files(t_files_select *s_files)$/;"	f	typeref:typename:char **	file:
 upload	upload.c	/^void	upload()$/;"	f	typeref:typename:void
