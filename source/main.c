@@ -189,6 +189,7 @@ bool	input(u64 kDown, t_files *s_files)
 	return (true);
 }
 
+// Init console, socket and struct with path point to sdmc:/
 t_files	*init(void)
 {
 	t_files	*ptr = NULL;
@@ -203,6 +204,13 @@ t_files	*init(void)
 	ptr->path[0] = '/';
 
 	return (ptr);
+}
+
+void	de_init(t_files *s_files)
+{
+	consoleExit(NULL);
+	socketExit();
+	free_list(s_files->files);
 }
 
 void	get_files(t_files *s_files)
@@ -250,9 +258,7 @@ int main(void)
 		consoleUpdate(NULL);
 	}
 
-	consoleExit(NULL);
-	socketExit();
-	free_list(s_files->files);
+	de_init(s_files);
 
 	return 0;
 }
