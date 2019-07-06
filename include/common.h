@@ -15,6 +15,7 @@
 #include "linked_list.h"
 #include "print.h"
 #include "array.h"
+#include "upload.h"
 
 #define SELECT_DIR	1
 

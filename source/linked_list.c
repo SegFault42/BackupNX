@@ -22,6 +22,7 @@ void	free_list(t_files_select *list)
 		while (first->next) {
 			tmp = first->next;
 			free(first->file_name);
+			first->file_name = NULL;
 			free(first);
 			first = tmp;
 		}

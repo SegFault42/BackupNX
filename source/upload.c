@@ -1,5 +1,6 @@
+#include "common.h"
 
-void	upload()
+static void	upload(char *file)
 {
 	CURL				*curl;
 	CURLcode			res;
@@ -27,15 +28,24 @@ void	upload()
 		curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L); 			// skipping cert. verification, if needed
 		curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L); 			// skipping hostname verification, if needed
 
-		[> Perform the request, res will get the return code <]
+		//[> Perform the request, res will get the return code <]
 		res = curl_easy_perform(curl);
-		[> Check for errors <]
+		//[> Check for errors <]
 		if(res != CURLE_OK)
 			  fprintf(stderr, "curl_easy_perform() failed: %s\n",
 					  curl_easy_strerror(res));
 
-		[> always cleanup <]
+		//[> always cleanup <]
 		curl_easy_cleanup(curl);
 	  }
-	  [>curl_global_cleanup();<]
+	  //[>curl_global_cleanup();<]
 }
+
+void	upload_files(t_list_files *list)
+{
+	/*for (int i = 0; list->files[i] != NULL; i++) {*/
+		/*printf("[%s] - [%s]\n", list->directory, list->files[i]);*/
+	/*}*/
+	print_2d_array(list->files);
+}
+
