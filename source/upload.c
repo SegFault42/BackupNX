@@ -47,20 +47,9 @@ static upload_file	*map_file(char *file)
 	return (up);
 }
 
-static void	upload(char *file)
+static void	format_dropbox_request(char *file, struct curl_slist **chunk)
 {
-	CURL				*curl;
-	CURLcode			res;
-	struct curl_slist	*chunk = NULL;
-	upload_file			*up = NULL;
-	char				*request = NULL;
-
-	curl = curl_easy_init();
-
-	up = map_file(file);
-	if (up == NULL) {
-		return ;
-	}
+	char	*request = NULL;
 
 	request = (char *)calloc(sizeof(char), strlen(file) + REQUEST_SIZE + 1);
 	if (request == NULL) {
@@ -71,14 +60,32 @@ static void	upload(char *file)
 	strcat(request, file);
 	strcat(request, "\",\"mode\": \"add\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}");
 
-	if(curl) {
-		// append all header
-		chunk = curl_slist_append(chunk, "Authorization: Bearer _G3bZFuCKiAAAAAAAAAADbubss3eXFcWBIJb5awT7_zNVKUuh68WHN_G8BHsPbpc");
-		chunk = curl_slist_append(chunk, request);
-		chunk = curl_slist_append(chunk, "Content-Type: application/octet-stream");
+	*chunk = curl_slist_append(*chunk, "Authorization: Bearer _G3bZFuCKiAAAAAAAAAADbubss3eXFcWBIJb5awT7_zNVKUuh68WHN_G8BHsPbpc");
+	*chunk = curl_slist_append(*chunk, request);
+	*chunk = curl_slist_append(*chunk, "Content-Type: application/octet-stream");
 
-		free(request);
-		request = NULL;
+	free(request);
+	request = NULL;
+}
+
+static void	upload(char *file)
+{
+	CURL				*curl;
+	CURLcode			res;
+	struct curl_slist	*chunk = NULL;
+	upload_file			*up = NULL;
+
+	curl = curl_easy_init();
+
+	up = map_file(file);
+	if (up == NULL) {
+		return ;
+	}
+
+	if(curl) {
+
+		// append all header
+		format_dropbox_request(file, &chunk);
 
 		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
 
@@ -136,7 +143,6 @@ char	*upload_files(t_list_files *list)
 		}
 
 	}
-	/*print_2d_array(list->files);*/
 
 	return (NULL);
 }
