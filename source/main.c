@@ -32,6 +32,7 @@ bool	input(u64 kDown, t_files *s_files)
 
 	if (kDown & KEY_A) {
 		change_directory(s_files, SELECT_DIR);
+		// TODO : LEAKS here !!
 	}
 
 	if (kDown & KEY_Y) {

@@ -1,6 +1,8 @@
 #ifndef UPLOAD_H
 #define UPLOAD_H
 
+#define REQUEST_SIZE	102
+
 typedef struct	upload_file
 {
 	char		*data;

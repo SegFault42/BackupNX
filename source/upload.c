@@ -53,6 +53,7 @@ static void	upload(char *file)
 	CURLcode			res;
 	struct curl_slist	*chunk = NULL;
 	upload_file			*up = NULL;
+	char				*request = NULL;
 
 	curl = curl_easy_init();
 
@@ -61,11 +62,23 @@ static void	upload(char *file)
 		return ;
 	}
 
+	request = (char *)calloc(sizeof(char), strlen(file) + REQUEST_SIZE + 1);
+	if (request == NULL) {
+		return ;
+	}
+
+	strcat(request, "Dropbox-API-Arg: {\"path\": \"");
+	strcat(request, file);
+	strcat(request, "\",\"mode\": \"add\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}");
+
 	if(curl) {
 		// append all header
 		chunk = curl_slist_append(chunk, "Authorization: Bearer _G3bZFuCKiAAAAAAAAAADbubss3eXFcWBIJb5awT7_zNVKUuh68WHN_G8BHsPbpc");
-		chunk = curl_slist_append(chunk, "Dropbox-API-Arg: {\"path\": \"/filename.txt\",\"mode\": \"add\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}");
+		chunk = curl_slist_append(chunk, request);
 		chunk = curl_slist_append(chunk, "Content-Type: application/octet-stream");
+
+		free(request);
+		request = NULL;
 
 		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
 
@@ -100,7 +113,7 @@ static void	upload(char *file)
 char	*upload_files(t_list_files *list)
 {
 	struct stat	st;
-	char		*path = NULL;
+	char		*file = NULL;
 
 	for (int i = 0; list->files[i] != NULL; i++) {
 		stat(list->files[i], &st);
@@ -108,18 +121,18 @@ char	*upload_files(t_list_files *list)
 		if (S_ISDIR(st.st_mode)) {
 			// Recursively upload files
 		} else {
-			path = (char *)calloc(sizeof(char), strlen(list->directory) + strlen(list->files[i]) + 1);
-			if(path == NULL) {
+			file = (char *)calloc(sizeof(char), strlen(list->directory) + strlen(list->files[i]) + 1);
+			if(file == NULL) {
 				return (NULL);
 			}
 
-			strcat(path, list->directory);
-			strcat(path, list->files[i]);
+			strcat(file, list->directory);
+			strcat(file, list->files[i]);
 
-			upload(path);
+			upload(file);
 
-			free(path);
-			path = NULL;
+			free(file);
+			file = NULL;
 		}
 
 	}
