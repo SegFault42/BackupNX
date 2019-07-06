@@ -60,51 +60,59 @@ void	chooseFileToUpload(t_files_select *files)
 	(void)files;
 }
 
-t_list_files	*update_list_files(t_files_select *s_files, char *cur_path)
+static size_t	count_elem_selected(t_files_select *node)
 {
-	t_list_files	*list = NULL;
+	size_t	nb_elem = 0;
+	t_files_select *tmp = node;
 
-	list = (t_list_files *)calloc(sizeof(t_list_files), 1); // alloc struct
-	if (!list) {
-		return (NULL);
-	}
-
-	// add first elem (the directory name)
-	list->directory = strdup(cur_path);
-	if (!list->directory) {
-		return (NULL);
-	}
-
-	// alloc just NULL ptr
-	list->files = (char **)calloc(sizeof(char *), 1);
-	if (!list->files) {
-		return (NULL);
-	}
-
-	// Add selected elem in array
-	for (int nb_elem = 0; s_files; s_files = s_files->next) {
-		if (s_files->select == true) {
-			// nb_elem + new_elem + NULL
-			list->files = (char **)realloc(list->files, sizeof(char *) * (nb_elem + 1 + 1));
-			if (list->files == NULL) {
-				return (NULL);
-			}
-			list->files[nb_elem] = strdup(s_files->file_name);
-			if (list->files[nb_elem] == NULL) {
-				return (NULL);
-			}
+	for (; tmp; tmp = tmp->next) {
+		if (tmp->select == true) {
 			nb_elem++;
 		}
 	}
 
-	// nothing to add, no files selected
-	if (list->files[0] == NULL) {
-		free(list->directory);
-		list->directory = NULL;
-		free_2d_array(&list->files);
+	return (nb_elem);
+}
+
+// fil struct with all files to upload
+t_list_files	*update_list_files(t_files_select *s_files, char *cur_path)
+{
+	t_list_files	*list = NULL;
+	t_files_select	*tmp = s_files;
+	size_t			nb_elem = 0;
+
+	//alloc struct
+	list = (t_list_files *)calloc(sizeof(t_list_files), 1);
+	if (list == NULL) {
+		return (NULL);
+	}
+
+	// count selected elem for allocation
+	nb_elem = count_elem_selected(s_files);
+	if (nb_elem == 0) {
 		free(list);
 		list = NULL;
+		return (NULL);
 	}
+
+	// alloc X elem + NULL
+	list->files = (char **)calloc(sizeof(char *), nb_elem + 1);
+	if (list->files == NULL) {
+		free(list);
+		list = NULL;
+		return (NULL);
+	}
+
+	// fill files
+	for (int i = 0; tmp; tmp = tmp->next) {
+		if (tmp->select == true) {
+			list->files[i] = strdup(tmp->file_name);
+			tmp->select = false;
+			i++;
+		}
+	}
+
+	list->directory = strdup(cur_path);
 
 	return (list);
 }
