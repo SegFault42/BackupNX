@@ -1,6 +1,12 @@
 #ifndef UPLOAD_H
 #define UPLOAD_H
 
-void	upload_files(t_list_files *list);
+typedef struct	upload_file
+{
+	char		*data;
+	size_t		size;
+}				upload_file;
+
+char	*upload_files(t_list_files *list);
 
 #endif

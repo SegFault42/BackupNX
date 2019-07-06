@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <curl/curl.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
