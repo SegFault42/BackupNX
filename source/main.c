@@ -70,8 +70,20 @@ bool	input(u64 kDown, t_files *s_files)
 t_files	*init(void)
 {
 	t_files	*ptr = NULL;
-
+	
 	consoleInit(NULL);
+	
+	if (isFileExist("/switch/BackupNX") == false) {
+		mkdir("/switch/BackupNX", 0777);
+	}
+	if (isFileExist("/switch/BackupNX/cred.json") == false) {
+		printf("%s/switch/BackupNX/cred.json missing !%s", CONSOLE_RED, CONSOLE_RESET);
+		consoleUpdate(NULL);
+		sleep(5);
+		consoleExit(NULL);
+		return (NULL);
+	}
+
 	socketInitializeDefault();
 
 	ptr = calloc(sizeof(t_files), 1);
@@ -99,7 +111,7 @@ int main(void)
 
 	s_files = init();
 	if (s_files == NULL)
-		{ return (EXIT_FAILURE); }
+		{ return (0); }
 
 	get_files(s_files);
 

@@ -21,7 +21,7 @@
 #define SELECT_DIR	1
 
 #define START_DEBUG	printf("\x1b[16;20H");
-#define END_DEBUG	printf("DEBUG !"); consoleUpdate(NULL); sleep(20);
+#define END_DEBUG	printf("DEBUG !"); consoleUpdate(NULL); sleep(3);
 #define DEBUG		START_DEBUG END_DEBUG
 
 #endif

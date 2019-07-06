@@ -47,25 +47,91 @@ static upload_file	*map_file(char *file)
 	return (up);
 }
 
+static char	*get_token(void)
+{
+	int		fd = 0;
+	struct stat	st;
+	char	*json_file = NULL;
+	cJSON	*token = NULL;
+	cJSON *json = NULL;
+
+	fd = open("/switch/BackupNX/cred.json", O_RDONLY);
+	if (fd == -1) {
+		return (NULL);
+	}
+
+	if (fstat(fd, &st) == -1) {
+		return (NULL);
+	}
+
+	json_file = (char *)calloc(sizeof(char), st.st_size + 1);
+	if (json_file == NULL) {
+		return (NULL);
+	}
+
+	if (read(fd, json_file, st.st_size) == -1) {
+		free(json_file);
+		json_file = NULL;
+		return (NULL);
+	}
+
+	json = cJSON_Parse(json_file);
+	if (json == NULL) {
+		free(json_file);
+		json_file = NULL;
+		return (NULL);
+	}
+
+	token = cJSON_GetObjectItemCaseSensitive(json, "key");
+	if (!cJSON_IsString(token) && (token->valuestring == NULL)) {
+		return (NULL);
+	}
+
+	free(json_file);
+	json_file = NULL;
+
+	return (token->valuestring);
+}
+
 static void	format_dropbox_request(char *file, struct curl_slist **chunk)
 {
-	char	*request = NULL;
+	char	*authorization = NULL, *api_arg = NULL;
+	char	*token = NULL;
 
-	request = (char *)calloc(sizeof(char), strlen(file) + REQUEST_SIZE + 1);
-	if (request == NULL) {
+	token = get_token();
+	if (token == NULL) {
+		printf("%s/switch/BackupNX/cred.json corrupted%s", CONSOLE_RED, CONSOLE_RESET);
+		consoleUpdate(NULL);
+		sleep(5);
 		return ;
 	}
 
-	strcat(request, "Dropbox-API-Arg: {\"path\": \"");
-	strcat(request, file);
-	strcat(request, "\",\"mode\": \"add\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}");
+	authorization = (char *)calloc(sizeof(char *), strlen(token) + REQUEST_AUTH_SIZE + 1);
+	if (authorization == NULL) {
+		return ;
+	}
 
-	*chunk = curl_slist_append(*chunk, "Authorization: Bearer _G3bZFuCKiAAAAAAAAAADbubss3eXFcWBIJb5awT7_zNVKUuh68WHN_G8BHsPbpc");
-	*chunk = curl_slist_append(*chunk, request);
+	strcat(authorization, "Authorization: Bearer ");
+	strcat(authorization, token);
+
+	*chunk = curl_slist_append(*chunk, authorization);
+	free(authorization);
+	authorization = NULL;
+
+	api_arg = (char *)calloc(sizeof(char), strlen(file) + REQUEST_API_SIZE + 1);
+	if (api_arg == NULL) {
+		return ;
+	}
+
+	strcat(api_arg, "Dropbox-API-Arg: {\"path\": \"");
+	strcat(api_arg, file);
+	strcat(api_arg, "\",\"mode\": \"add\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}");
+
+	*chunk = curl_slist_append(*chunk, api_arg);
 	*chunk = curl_slist_append(*chunk, "Content-Type: application/octet-stream");
 
-	free(request);
-	request = NULL;
+	free(api_arg);
+	api_arg = NULL;
 }
 
 static void	upload(char *file)

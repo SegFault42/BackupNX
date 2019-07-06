@@ -39,9 +39,9 @@ include $(DEVKITPRO)/libnx/switch_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
-SOURCES		:=	source
+SOURCES		:=	source cjson
 DATA		:=	data
-INCLUDES	:=	include
+INCLUDES	:=	include cjson
 #ROMFS	:=	romfs
 
 #---------------------------------------------------------------------------------

@@ -1,7 +1,10 @@
 #ifndef UPLOAD_H
 #define UPLOAD_H
 
-#define REQUEST_SIZE	102
+#include "cJSON.h"
+
+#define REQUEST_AUTH_SIZE	22
+#define REQUEST_API_SIZE	102
 
 typedef struct	upload_file
 {
