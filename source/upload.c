@@ -75,6 +75,8 @@ static char	*get_token(void)
 		return (NULL);
 	}
 
+	close(fd);
+
 	json = cJSON_Parse(json_file);
 	if (json == NULL) {
 		free(json_file);
@@ -87,6 +89,7 @@ static char	*get_token(void)
 		return (NULL);
 	}
 
+	cJSON_Delete(json);
 	free(json_file);
 	json_file = NULL;
 
