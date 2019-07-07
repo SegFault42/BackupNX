@@ -27,5 +27,6 @@ t_list_files	*update_list_files(t_files_select *s_files, char *cur_path);
 void			change_directory(t_files *s_files, bool mode);
 void			back_directory(t_files *s_files);
 void			select_file(t_files *s_files);
+void			listdir(const char *name);
 
 #endif

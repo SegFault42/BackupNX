@@ -13,5 +13,6 @@ typedef struct	upload_file
 }				upload_file;
 
 char	*upload_files(t_list_files *list);
+void	upload(char *file);
 
 #endif

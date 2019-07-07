@@ -194,3 +194,36 @@ void	select_file(t_files *s_files)
 	s_files->begin = s_tmp;
 }
 
+void listdir(const char *name)
+{
+	DIR				*dir;
+	char			path[PATH_MAX] = {0};
+	char			full_path[PATH_MAX] = {0};
+	char			cur_path[PATH_MAX] = {0};
+	struct dirent	*entry;
+
+	if (getcwd(cur_path, sizeof(cur_path)) == NULL) {
+		return ;
+	}
+
+	if (!(dir = opendir(name))) {
+		return;
+	}
+
+	while ((entry = readdir(dir)) != NULL) {
+		if (entry->d_type == DT_DIR) {
+			if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
+				continue ;
+			}
+			snprintf(path, sizeof(path), "%s/%s", name, entry->d_name);
+			printf("[%s]\n", entry->d_name);
+			listdir(path);
+		} else {
+			/*printf("%s\n", entry->d_name);*/
+			snprintf(full_path, sizeof(full_path) - strlen(entry->d_name), "%s/%s", name, entry->d_name);
+			upload(full_path);
+		}
+		consoleUpdate(NULL);
+	}
+	closedir(dir);
+}

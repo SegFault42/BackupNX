@@ -70,7 +70,7 @@ bool	input(u64 kDown, t_files *s_files)
 t_files	*init(void)
 {
 	t_files	*ptr = NULL;
-	
+
 	consoleInit(NULL);
 	
 	if (isFileExist("/switch/BackupNX") == false) {

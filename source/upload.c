@@ -1,5 +1,7 @@
 #include "common.h"
 
+#include <math.h>
+
 static upload_file	*map_file(char *file)
 {
 	struct stat	st;
@@ -89,7 +91,7 @@ static char	*get_token(void)
 		return (NULL);
 	}
 
-	cJSON_Delete(json);
+	/*cJSON_Delete(json);*/
 	free(json_file);
 	json_file = NULL;
 
@@ -137,7 +139,7 @@ static void	format_dropbox_request(char *file, struct curl_slist **chunk)
 	api_arg = NULL;
 }
 
-static void	upload(char *file)
+void	upload(char *file)
 {
 	CURL				*curl;
 	CURLcode			res;
@@ -162,7 +164,7 @@ static void	upload(char *file)
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, up->size);
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, up->data);
 
-		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+		/*curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);*/
 
 		curl_easy_setopt(curl, CURLOPT_URL, "https://content.dropboxapi.com/2/files/upload");
 
@@ -178,6 +180,7 @@ static void	upload(char *file)
 
 		// always cleanup
 		curl_easy_cleanup(curl);
+		curl_slist_free_all(chunk);
 	}
 
 	free(up->data);
@@ -188,29 +191,29 @@ static void	upload(char *file)
 
 char	*upload_files(t_list_files *list)
 {
-	struct stat	st;
+	struct stat	st = {0};
 	char		*file = NULL;
 
 	for (int i = 0; list->files[i] != NULL; i++) {
-		stat(list->files[i], &st);
+		file = (char *)calloc(sizeof(char), strlen(list->directory) + strlen(list->files[i]) + 1);
+		if (file == NULL) {
+			return (NULL);
+		}
+
+		strcat(file, list->directory);
+		strcat(file, list->files[i]);
+		stat(file, &st);
 
 		if (S_ISDIR(st.st_mode)) {
 			// Recursively upload files
-		} else {
-			file = (char *)calloc(sizeof(char), strlen(list->directory) + strlen(list->files[i]) + 1);
-			if(file == NULL) {
-				return (NULL);
-			}
-
-			strcat(file, list->directory);
-			strcat(file, list->files[i]);
-
+			listdir(file);
+			/*DEBUG*/
+		} else if (S_ISREG(st.st_mode)) {
 			upload(file);
-
-			free(file);
-			file = NULL;
 		}
 
+		free(file);
+		file = NULL;
 	}
 
 	return (NULL);
