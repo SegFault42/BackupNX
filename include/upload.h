@@ -4,7 +4,7 @@
 #include "cJSON.h"
 
 #define REQUEST_AUTH_SIZE	22
-#define REQUEST_API_SIZE	102
+#define REQUEST_API_SIZE	108
 
 typedef struct	upload_file
 {

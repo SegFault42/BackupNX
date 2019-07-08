@@ -120,11 +120,6 @@ int main(void)
 		hidScanInput();
 		u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
-		// Only for debug
-		if (s_files && s_files->begin) {
-			printf("%s | %s\n", s_files->begin->path, s_files->path);
-		}
-
 		// Print all files in curent dir
 		print_directory(s_files->begin, s_files->cursor, s_files->nb_elem);
 

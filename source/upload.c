@@ -130,7 +130,7 @@ static void	format_dropbox_request(char *file, struct curl_slist **chunk)
 
 	strcat(api_arg, "Dropbox-API-Arg: {\"path\": \"");
 	strcat(api_arg, file);
-	strcat(api_arg, "\",\"mode\": \"add\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}");
+	strcat(api_arg, "\",\"mode\": \"overwrite\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}");
 
 	*chunk = curl_slist_append(*chunk, api_arg);
 	*chunk = curl_slist_append(*chunk, "Content-Type: application/octet-stream");
@@ -205,9 +205,7 @@ char	*upload_files(t_list_files *list)
 		stat(file, &st);
 
 		if (S_ISDIR(st.st_mode)) {
-			// Recursively upload files
 			listdir(file);
-			/*DEBUG*/
 		} else if (S_ISREG(st.st_mode)) {
 			upload(file);
 		}
