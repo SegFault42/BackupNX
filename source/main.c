@@ -77,7 +77,7 @@ t_files	*init(void)
 		mkdir("/switch/BackupNX", 0777);
 	}
 	if (isFileExist("/switch/BackupNX/cred.json") == false) {
-		printf("%s/switch/BackupNX/cred.json missing !%s", CONSOLE_RED, CONSOLE_RESET);
+		printf("%s/switch/BackupNX/cred.json missing !%s", CONSOLE_RED, CONSOLE_WHITE);
 		consoleUpdate(NULL);
 		sleep(5);
 		consoleExit(NULL);
@@ -105,6 +105,28 @@ void	de_init(t_files *s_files)
 // tab = 	{"dir_name", "file1", "file2"}
 // 			{"dir_name", "file1", "file2"}
 
+void	print_header(void)
+{
+	printf("\x1b[0;0H");
+	printf("%s", CONSOLE_WHITE);
+	printf("================================================================================");
+	printf("%s%52s%s", CONSOLE_GREEN, "BackupNX v0.1 (By SegFault42)\n", CONSOLE_WHITE);
+	printf("================================================================================");
+}
+
+void	print_footer(void)
+{
+	printf("\x1b[43;0H");
+	printf("================================================================================");
+	printf("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
+			CONSOLE_RED, "A", CONSOLE_WHITE, " = ", CONSOLE_MAGENTA, "Enter directory", CONSOLE_WHITE, " | ",
+			CONSOLE_RED, "B", CONSOLE_WHITE, " = ", CONSOLE_MAGENTA, "Back directory", CONSOLE_WHITE, " | ",
+			CONSOLE_RED, "X", CONSOLE_WHITE, " = ", CONSOLE_MAGENTA, "Select files", CONSOLE_WHITE, " | ",
+			CONSOLE_RED, "Y", CONSOLE_WHITE, " = ", CONSOLE_MAGENTA, "Upload Files\n", CONSOLE_WHITE
+			);
+	printf("================================================================================");
+}
+
 int main(void)
 {
 	t_files	*s_files = NULL;
@@ -115,8 +137,23 @@ int main(void)
 
 	get_files(s_files);
 
+	/*PrintConsole mainWindow, titleWindow, errorWindow;*/
+	/*consoleInit(&titleWindow);*/
+	/*consoleInit(&mainWindow);*/
+	/*consoleInit(&errorWindow);*/
+
+	/*consoleSetWindow(&titleWindow, 0, 0, 80, 3);*/
+	/*consoleSetWindow(&mainWindow, 0, 3, 80, 43);*/
+	/*consoleSetWindow(&errorWindow, 0, 42, 80, 3);*/
+
+	/*consoleSelect(&titleWindow);*/
+	/*print_header();*/
+
+
 	while (1) {
+		/*consoleSelect(&mainWindow);*/
 		consoleClear();
+		print_header();
 		hidScanInput();
 		u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
@@ -131,6 +168,9 @@ int main(void)
 		if (input(kDown, s_files) == false) {
 			break ;
 		}
+
+		/*consoleSelect(&errorWindow);*/
+		print_footer();
 
 		consoleUpdate(NULL);
 	}

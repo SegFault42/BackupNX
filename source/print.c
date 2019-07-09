@@ -42,12 +42,12 @@ static void	print_filename(t_files_select *begin)
 	struct stat		st = {0};
 
 	if (begin->path == NULL || stat(begin->path, &st) == -1) {
-		printf("%sFile error%s\n", CONSOLE_RED, CONSOLE_RESET);
+		printf("%sFile error%s\n", CONSOLE_RED, CONSOLE_WHITE);
 	} else {
 		if (S_ISDIR(st.st_mode)) {
-			printf("%s%s%s\n", CONSOLE_YELLOW, begin->file_name, CONSOLE_RESET);
+			printf("%s%s%s\n", CONSOLE_YELLOW, begin->file_name, CONSOLE_WHITE);
 		} else if (S_ISREG(st.st_mode)) {
-			printf("%s%s%s\n", CONSOLE_CYAN, begin->file_name, CONSOLE_RESET);
+			printf("%s%s%s\n", CONSOLE_CYAN, begin->file_name, CONSOLE_WHITE);
 		} else {
 			printf("%s\n", begin->file_name);
 		}
@@ -59,7 +59,7 @@ void	print_directory(t_files_select *begin, size_t cursor, size_t nb_elem)
 	size_t			elem = 0;
 
 	if (begin == NULL) {
-		printf("%s%s%s", CONSOLE_RED, "No such file or directory\n", CONSOLE_RESET);
+		printf("%s%s%s", CONSOLE_RED, "No such file or directory\n", CONSOLE_WHITE);
 	} else {
 		begin = scrolling(cursor, begin);
 
