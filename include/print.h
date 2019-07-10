@@ -4,6 +4,7 @@
 #include "file.h"
 
 #define MAX_LINE	39
+#define MAX_LINE_PRINT	74
 
 void	print_directory(t_files_select *begin, size_t cursor);
 void	print_header(void);

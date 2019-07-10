@@ -40,18 +40,38 @@ static void	print_selected_file(bool select)
 static void	print_filename(t_files_select *begin)
 {
 	struct stat		st = {0};
+	char			*short_name = NULL;
+
+	if (strlen(begin->file_name) > 74) {
+		short_name = (char *)calloc(sizeof(char *), MAX_LINE_PRINT + 1);
+		if (short_name != NULL) {
+			strncat(short_name, begin->file_name, 71);
+			strcat(short_name, "...");
+		}
+	}
 
 	if (begin->path == NULL || stat(begin->path, &st) == -1) {
 		printf("%sFile error%s\n", CONSOLE_RED, CONSOLE_WHITE);
 	} else {
 		if (S_ISDIR(st.st_mode)) {
-			printf("%s%s%s\n", CONSOLE_YELLOW, begin->file_name, CONSOLE_WHITE);
+			if (short_name == NULL) {
+				printf("%s%s%s\n", CONSOLE_YELLOW, begin->file_name, CONSOLE_WHITE);
+			} else {
+				printf("%s%s%s", CONSOLE_YELLOW, short_name, CONSOLE_WHITE);
+			}
 		} else if (S_ISREG(st.st_mode)) {
-			printf("%s%s%s\n", CONSOLE_CYAN, begin->file_name, CONSOLE_WHITE);
+			if (short_name == NULL) {
+				printf("%s%s%s\n", CONSOLE_CYAN, begin->file_name, CONSOLE_WHITE);
+			} else {
+				printf("%s%s%s", CONSOLE_CYAN, short_name, CONSOLE_WHITE);
+			}
 		} else {
 			printf("%s\n", begin->file_name);
 		}
 	}
+
+	free(short_name);
+	short_name = NULL;
 }
 
 void	print_directory(t_files_select *begin, size_t cursor)
