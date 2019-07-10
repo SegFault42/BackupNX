@@ -17,6 +17,8 @@
 #include "print.h"
 #include "array.h"
 #include "upload.h"
+#include "init.h"
+#include "input.h"
 
 #define SELECT_DIR	1
 
