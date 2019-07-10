@@ -31,8 +31,10 @@ bool	input(u64 kDown, t_files *s_files)
 	}
 
 	if (kDown & KEY_A) {
-		change_directory(s_files, SELECT_DIR);
-		// TODO : LEAKS here !!
+		if (s_files->nb_elem > 0) {
+			change_directory(s_files, SELECT_DIR);
+		}
+		// TODO : Potential LEAKS here !!
 	}
 
 	if (kDown & KEY_Y) {
@@ -45,7 +47,6 @@ bool	input(u64 kDown, t_files *s_files)
 			printf("No files selected\n");
 		} else {
 			upload_files(list);
-			// TODO: set selected field to false in list
 			free_2d_array(&list->files);
 			free(list->directory);
 			list->directory = NULL;
@@ -102,31 +103,6 @@ void	de_init(t_files *s_files)
 	free_list(s_files->files);
 }
 
-// tab = 	{"dir_name", "file1", "file2"}
-// 			{"dir_name", "file1", "file2"}
-
-void	print_header(void)
-{
-	printf("\x1b[0;0H");
-	printf("%s", CONSOLE_WHITE);
-	printf("================================================================================");
-	printf("%s%52s%s", CONSOLE_GREEN, "BackupNX v0.1 (By SegFault42)\n", CONSOLE_WHITE);
-	printf("================================================================================");
-}
-
-void	print_footer(void)
-{
-	printf("\x1b[43;0H");
-	printf("================================================================================");
-	printf("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
-			CONSOLE_RED, "A", CONSOLE_WHITE, " = ", CONSOLE_MAGENTA, "Enter directory", CONSOLE_WHITE, " | ",
-			CONSOLE_RED, "B", CONSOLE_WHITE, " = ", CONSOLE_MAGENTA, "Back directory", CONSOLE_WHITE, " | ",
-			CONSOLE_RED, "X", CONSOLE_WHITE, " = ", CONSOLE_MAGENTA, "Select files", CONSOLE_WHITE, " | ",
-			CONSOLE_RED, "Y", CONSOLE_WHITE, " = ", CONSOLE_MAGENTA, "Upload Files\n", CONSOLE_WHITE
-			);
-	printf("================================================================================");
-}
-
 int main(void)
 {
 	t_files	*s_files = NULL;
@@ -137,28 +113,14 @@ int main(void)
 
 	get_files(s_files);
 
-	/*PrintConsole mainWindow, titleWindow, errorWindow;*/
-	/*consoleInit(&titleWindow);*/
-	/*consoleInit(&mainWindow);*/
-	/*consoleInit(&errorWindow);*/
-
-	/*consoleSetWindow(&titleWindow, 0, 0, 80, 3);*/
-	/*consoleSetWindow(&mainWindow, 0, 3, 80, 43);*/
-	/*consoleSetWindow(&errorWindow, 0, 42, 80, 3);*/
-
-	/*consoleSelect(&titleWindow);*/
-	/*print_header();*/
-
-
 	while (1) {
-		/*consoleSelect(&mainWindow);*/
 		consoleClear();
 		print_header();
 		hidScanInput();
 		u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
 		// Print all files in curent dir
-		print_directory(s_files->begin, s_files->cursor, s_files->nb_elem);
+		print_directory(s_files->begin, s_files->cursor);
 
 		// point begin to begining of the lst
 		if (s_files->begin == NULL) {
@@ -169,7 +131,6 @@ int main(void)
 			break ;
 		}
 
-		/*consoleSelect(&errorWindow);*/
 		print_footer();
 
 		consoleUpdate(NULL);

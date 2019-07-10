@@ -42,7 +42,9 @@ BUILD		:=	build
 SOURCES		:=	source cjson
 DATA		:=	data
 INCLUDES	:=	include cjson
-#ROMFS	:=	romfs
+APP_AUTHOR  :=	SegFault42
+APP_TITLE   :=	BackupNX
+APP_VERSION :=	v 0.1
 
 #---------------------------------------------------------------------------------
 # options for code generation

@@ -54,7 +54,7 @@ static void	print_filename(t_files_select *begin)
 	}
 }
 
-void	print_directory(t_files_select *begin, size_t cursor, size_t nb_elem)
+void	print_directory(t_files_select *begin, size_t cursor)
 {
 	size_t			elem = 0;
 
@@ -70,3 +70,26 @@ void	print_directory(t_files_select *begin, size_t cursor, size_t nb_elem)
 		}
 	}
 }
+
+void	print_header(void)
+{
+	printf("\x1b[0;0H");
+	printf("%s", CONSOLE_WHITE);
+	printf("================================================================================");
+	printf("%s%52s%s", CONSOLE_GREEN, "BackupNX v0.1 (By SegFault42)\n", CONSOLE_WHITE);
+	printf("================================================================================");
+}
+
+void	print_footer(void)
+{
+	printf("\x1b[43;0H");
+	printf("================================================================================");
+	printf("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
+			CONSOLE_RED, "A", CONSOLE_WHITE, " = ", CONSOLE_MAGENTA, "Enter directory", CONSOLE_WHITE, " | ",
+			CONSOLE_RED, "B", CONSOLE_WHITE, " = ", CONSOLE_MAGENTA, "Back directory", CONSOLE_WHITE, " | ",
+			CONSOLE_RED, "X", CONSOLE_WHITE, " = ", CONSOLE_MAGENTA, "Select files", CONSOLE_WHITE, " | ",
+			CONSOLE_RED, "Y", CONSOLE_WHITE, " = ", CONSOLE_MAGENTA, "Upload Files\n", CONSOLE_WHITE
+			);
+	printf("================================================================================");
+}
+
