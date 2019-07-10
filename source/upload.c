@@ -16,12 +16,14 @@ static upload_file	*map_file(char *file)
 
 	// fstat to get size
 	if (fstat(fd, &st) == -1) {
+		close(fd);
 		return (NULL);
 	}
 
 	// Alloc struct on heap
 	up = (upload_file *)calloc(sizeof(upload_file), 1);
 	if (up == NULL) {
+		close(fd);
 		return (NULL);
 	}
 
@@ -31,12 +33,14 @@ static upload_file	*map_file(char *file)
 	if (up->data == NULL) {
 		free(up);
 		up = NULL;
+		close(fd);
 		return (NULL);
 	}
 
 	// read file int data
 	ret = read(fd, up->data, up->size);
 	if (ret == -1) {
+		close(fd);
 		free(up->data);
 		up->data = NULL;
 		free(up);
