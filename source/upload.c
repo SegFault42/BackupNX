@@ -143,6 +143,11 @@ static void	format_dropbox_request(char *file, struct curl_slist **chunk)
 	api_arg = NULL;
 }
 
+static size_t	silent_output(__attribute__((unused)) char *ptr, size_t size, size_t nmemb, __attribute__((unused)) void *userdata)
+{
+   return	(size * nmemb);
+}
+
 void	upload(char *file)
 {
 	CURL				*curl;
@@ -168,7 +173,8 @@ void	upload(char *file)
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, up->size);
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, up->data);
 
-		/*curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);*/
+		// Silent output
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &silent_output);
 
 		curl_easy_setopt(curl, CURLOPT_URL, "https://content.dropboxapi.com/2/files/upload");
 
