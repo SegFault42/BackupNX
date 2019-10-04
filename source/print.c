@@ -96,7 +96,7 @@ void	print_header(void)
 	printf("\x1b[0;0H");
 	printf("%s", CONSOLE_WHITE);
 	printf("================================================================================");
-	printf("%s%52s%s", CONSOLE_GREEN, "BackupNX v0.1 (By SegFault42)\n", CONSOLE_WHITE);
+	printf("%s%52s%s", CONSOLE_GREEN, "BackupNX v0.2 (By SegFault42)\n", CONSOLE_WHITE);
 	printf("================================================================================");
 }
 
