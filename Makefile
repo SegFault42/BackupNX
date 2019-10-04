@@ -44,7 +44,7 @@ DATA		:=	data
 INCLUDES	:=	include cjson
 APP_AUTHOR  :=	SegFault42
 APP_TITLE   :=	BackupNX
-APP_VERSION :=	v 0.1
+APP_VERSION :=	v 0.2
 
 #---------------------------------------------------------------------------------
 # options for code generation
