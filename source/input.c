@@ -37,6 +37,10 @@ bool	input(u64 kDown, t_files *s_files)
 		}
 	}
 
+	/*if (kDown & KEY_L) {*/
+		
+	/*}*/
+
 	if (kDown & KEY_Y) {
 		// get all selected files and directory
 		if (s_files->begin) {

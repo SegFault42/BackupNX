@@ -56,3 +56,4 @@ dkms.conf
 *.nacp
 build
 tags
+cred.json
